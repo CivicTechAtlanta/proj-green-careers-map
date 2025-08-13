@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "../Header/Header";
 import Home from "../Home/Home";
 import Footer from "../Footer/Footer";
@@ -16,6 +16,26 @@ function App() {
   const closeModal = () => {
     setActiveModal("");
   };
+
+  useEffect(() => {
+    const handleEscClose = (e) => {
+      if (e.key === "Escape") closeModal();
+    };
+
+    const handleClickOutside = (e) => {
+      if (e.target.classList.contains("modal")) {
+        closeModal();
+      }
+    };
+
+    window.addEventListener("keydown", handleEscClose);
+    window.addEventListener("click", handleClickOutside);
+
+    return () => {
+      window.removeEventListener("keydown", handleEscClose);
+      window.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
 
   return (
     <div className="app">

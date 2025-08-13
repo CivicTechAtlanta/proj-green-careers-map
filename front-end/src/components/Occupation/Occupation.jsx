@@ -1,6 +1,6 @@
 import "./Occupation.css";
 
-function Occupation({ onJobInfoClick }) {
+function Occupation({ onJobInfoClick, value }) {
   return (
     <div>
       <button
@@ -8,7 +8,7 @@ function Occupation({ onJobInfoClick }) {
         type="button"
         onClick={onJobInfoClick}
       >
-        JOB 1
+        JOB {value}
       </button>
     </div>
   );
