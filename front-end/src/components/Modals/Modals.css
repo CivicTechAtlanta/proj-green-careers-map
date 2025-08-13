@@ -1,0 +1,24 @@
+.modal {
+  visibility: hidden;
+  background-color: aqua;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  width: 400px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.modal__open {
+  visibility: visible;
+  background-color: aqua;
+}
+
+.modal__close-button {
+  background-color: black;
+  color: white;
+}
