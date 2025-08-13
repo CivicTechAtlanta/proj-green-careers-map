@@ -3,15 +3,18 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: blueviolet;
+  background-color: violet;
+}
+
+.home__title {
+  margin: 30px 0;
 }
 
 .home__job-info-button {
-  padding: 40px;
+  padding: 5px;
 }
 
 .home__job-info-button:hover {
   cursor: pointer;
   transform: scale(1.1);
-  padding: 40px;
 }

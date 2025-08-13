@@ -1,16 +1,13 @@
+import Occupation from "../Occupation/Occupation";
 import "./Home.css";
 
 function Home({ onJobInfoClick }) {
   return (
     <section className="home">
-      THIS IS THE HOME SECTION
-      <button
-        className="home__job-info-button"
-        type="button"
-        onClick={onJobInfoClick}
-      >
-        CLICK HERE TO OPEN JOB INFO MODAL
-      </button>
+      <h2 className="home__title">Career Map</h2>
+      <div className="home__job-map">
+        <Occupation onJobInfoClick={onJobInfoClick} />
+      </div>
     </section>
   );
 }

@@ -1,24 +1,38 @@
 .modal {
-  visibility: hidden;
-  background-color: aqua;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #0000004d;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 20px;
-  width: 400px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  visibility: hidden;
 }
 
 .modal__open {
   visibility: visible;
-  background-color: aqua;
+}
+
+.modal__content {
+  background-color: #fff;
+  position: relative;
+  padding: 28px 28px 36px;
+  box-sizing: border-box;
+  max-width: 900px;
+  width: 100%;
 }
 
 .modal__close-button {
+  position: absolute;
   background-color: black;
   color: white;
+  top: 20px;
+  right: 20px;
+}
+
+.modal__close-button:hover {
+  transform: scale(1.1);
+  cursor: pointer;
 }
