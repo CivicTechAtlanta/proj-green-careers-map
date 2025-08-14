@@ -1,0 +1,34 @@
+.map {
+  background-color: aquamarine;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  padding: 40px;
+}
+
+.category {
+  padding: 10px 15px;
+  text-align: center;
+}
+
+.category__1 {
+  background-color: blue;
+}
+
+.category__2 {
+  background-color: green;
+}
+
+.category__3 {
+  background-color: yellow;
+}
+.category__4 {
+  background-color: purple;
+}
+.category__5 {
+  background-color: red;
+}
+
+.category__title {
+  margin: 0;
+}
