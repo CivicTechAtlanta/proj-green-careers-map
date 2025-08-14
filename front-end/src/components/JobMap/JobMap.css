@@ -3,10 +3,12 @@
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-template-rows: repeat(3, 1fr);
+  padding: 40px;
 }
 
 .category {
   padding: 10px 15px;
+  text-align: center;
 }
 
 .category__1 {
@@ -25,4 +27,8 @@
 }
 .category__5 {
   background-color: red;
+}
+
+.category__title {
+  margin: 0;
 }
