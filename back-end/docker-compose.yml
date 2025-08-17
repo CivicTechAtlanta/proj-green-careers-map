@@ -10,7 +10,7 @@ services:
       POSTGRES_USER: directus
       POSTGRES_PASSWORD: password
     volumes:
-      - ./pgdata:/var/lib/postgresql/data
+      - proj_green_careers_postgres_data:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "directus"]
       interval: 5s
@@ -38,5 +38,9 @@ services:
       DB_PASSWORD: "password"
       WEBSOCKETS_ENABLED: "true"
     volumes:
-      - ./uploads:/directus/uploads
-      - ./extensions:/directus/extensions
+      - proj_green_careers_directus_data:/directus/uploads
+      - proj_green_careers_directus_data:/directus/extensions
+
+volumes:
+  proj_green_careers_postgres_data:
+  proj_green_careers_directus_data:
