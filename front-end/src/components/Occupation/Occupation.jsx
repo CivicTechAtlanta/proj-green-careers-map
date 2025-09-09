@@ -1,14 +1,14 @@
 import "./Occupation.css";
 
-function Occupation({ onJobInfoClick, value }) {
+function Occupation({ onJobInfoClick, value, children }) {
   return (
     <div>
       <button
         className="home__job-info-button"
         type="button"
-        onClick={onJobInfoClick}
+        onClick={() => onJobInfoClick(value)}
       >
-        JOB {value}
+        {children}
       </button>
     </div>
   );
