@@ -1,20 +1,77 @@
 .home {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: violet;
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding: clamp(1rem, 3vw, 2rem);
+  display: grid;
+  row-gap: 1rem;
+  background: transparent;
 }
 
+/* Title: bold, readable, centered */
 .home__title {
-  margin: 30px 0;
+  margin: 0.5rem 0 0.25rem;
+  text-align: center;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+  font-size: clamp(1.25rem, 2.2vw, 1.75rem);
+  color: #0f172a;
 }
 
+/* Status & messages (shown by Home when fetching) */
+.home__status {
+  text-align: center;
+  color: #374151;
+}
+.home__error {
+  text-align: center;
+  color: #b91c1c;
+}
+.home__note {
+  text-align: center;
+  color: #475569;
+  font-size: 0.95rem;
+}
+
+/* CTA button for job info  */
 .home__job-info-button {
-  padding: 5px;
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.55rem 0.9rem;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  background: #059669;
+  color: #ffffff;
+  font-weight: 600;
+  line-height: 1;
+  transition: background-color 0.2s ease, transform 0.12s ease,
+    box-shadow 0.2s ease, border-color 0.2s ease;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.08);
+}
+.home__job-info-button:hover {
+  background: #047857;
+  transform: translateY(-1px);
+  cursor: pointer;
+}
+.home__job-info-button:active {
+  transform: translateY(0);
+}
+.home__job-info-button:focus-visible {
+  outline: 3px solid rgba(5, 150, 105, 0.45);
+  outline-offset: 2px;
+  border-color: #10b981;
 }
 
-.home__job-info-button:hover {
-  cursor: pointer;
-  transform: scale(1.1);
+/* Small-screen niceties */
+@media (max-width: 768px) {
+  .home {
+    row-gap: 0.75rem;
+  }
+  .home__title {
+    font-size: clamp(1.2rem, 4vw, 1.5rem);
+  }
 }
