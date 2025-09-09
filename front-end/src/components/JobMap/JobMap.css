@@ -1,34 +1,76 @@
-.map {
-  background-color: aquamarine;
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: repeat(3, 1fr);
-  padding: 40px;
+.map-container {
+  width: 100%;
+  overflow-x: auto;
 }
 
+.map-grid {
+  display: grid;
+  gap: 8px;
+  align-items: stretch;
+}
+
+/* Top category row */
+.categories {
+  display: contents; /* let children participate directly in the grid */
+}
+.categories .spacer {
+  /* occupies the left-most column above the level names */
+  grid-column: 1 / 2;
+  height: 1px;
+}
+
+/* Category cards */
 .category {
-  padding: 10px 15px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid hsl(var(--h) var(--s) calc(var(--l) + 10%) / 0.35);
+  background: hsl(var(--h) var(--s) 96% / 0.6);
+  color: hsl(var(--h) var(--s) calc(var(--l)));
+  font-weight: 700;
   text-align: center;
 }
 
-.category__1 {
-  background-color: blue;
+/* Each data row: left label + N job columns */
+.row {
+  display: contents;
 }
 
-.category__2 {
-  background-color: green;
+/* Left column (row/level label) */
+.level {
+  grid-column: 1 / 2;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 8px 10px;
+  border-radius: 12px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
 }
-
-.category__3 {
-  background-color: yellow;
-}
-.category__4 {
-  background-color: purple;
-}
-.category__5 {
-  background-color: red;
-}
-
-.category__title {
+.level-name {
   margin: 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+/* Jobs panel cell (one per category per row) */
+.jobs {
+  min-height: 90px;
+  border-radius: 12px;
+  border: 1px dashed hsl(var(--h) var(--s) calc(var(--l)) / 0.35);
+  background: hsl(var(--h) var(--s) 98% / 0.55);
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04) inset;
+}
+
+/* Responsive niceties */
+@media (max-width: 720px) {
+  .level {
+    font-size: 0.9rem;
+  }
+  .category {
+    font-size: 0.9rem;
+  }
+  .jobs {
+    min-height: 72px;
+  }
 }

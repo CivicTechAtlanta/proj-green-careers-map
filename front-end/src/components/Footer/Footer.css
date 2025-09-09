@@ -1,9 +1,35 @@
+/* Footer.css */
+
 .footer {
-  background: lightcoral;
+  background: #065f46; /* deep emerald to match header */
+  color: #ffffff;
+  padding: 1.25rem 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.04) inset;
+}
+
+@media (min-width: 768px) {
+  .footer {
+    padding: 1.5rem 1rem;
+  }
 }
 
 .footer__copyright {
   margin: 0;
-  padding: 20px;
+  padding: 0;
   text-align: center;
+  font-size: 0.95rem;
+  letter-spacing: 0.01em;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+/* Nice defaults if you ever drop a link in the footer */
+.footer a {
+  color: #ffffff;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: rgba(255, 255, 255, 0.5);
+}
+.footer a:hover {
+  text-decoration-color: #ffffff;
 }

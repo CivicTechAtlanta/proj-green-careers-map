@@ -1,8 +1,23 @@
 .header {
-  background-color: lightblue;
+  /* simple, accessible hero bar */
+  background: #065f46;
+  color: #ffffff;
+  padding: 2rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04) inset;
+}
+
+@media (min-width: 768px) {
+  .header {
+    padding: 2.5rem 1rem;
+  }
 }
 
 .header__title {
-  padding: 20px;
   margin: 0;
+  text-align: center;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+  font-size: clamp(1.75rem, 3.2vw, 2.75rem);
 }
