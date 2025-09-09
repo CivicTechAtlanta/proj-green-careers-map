@@ -30,7 +30,6 @@ const PATHS = {
 
 // Optional: warn if BASE_URL is empty (useful during setup)
 if (!BASE_URL) {
-  // eslint-disable-next-line no-console
   console.warn(
     "[api] BASE_URL is empty. Set VITE_API_BASE_URL (Vite) or REACT_APP_API_BASE_URL (CRA)."
   );
