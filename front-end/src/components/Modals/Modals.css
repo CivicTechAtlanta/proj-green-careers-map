@@ -26,13 +26,23 @@
 
 .modal__close-button {
   position: absolute;
-  background-color: black;
-  color: white;
-  top: 20px;
-  right: 20px;
+  background-color: #d3d3d3;
+  color: #666;
+  top: 15px;
+  right: 15px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  font-size: 18px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .modal__close-button:hover {
-  transform: scale(1.1);
+  background-color: #bbb;
+  transform: scale(1.05);
   cursor: pointer;
 }

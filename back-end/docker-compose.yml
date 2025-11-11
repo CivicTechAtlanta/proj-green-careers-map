@@ -37,6 +37,8 @@ services:
       DB_USER: "directus"
       DB_PASSWORD: "password"
       WEBSOCKETS_ENABLED: "true"
+      CORS_ENABLED: true
+      CORS_ORIGIN: "http://localhost:4000"
     volumes:
       - proj_green_careers_directus_data:/directus/uploads
       - proj_green_careers_directus_data:/directus/extensions
