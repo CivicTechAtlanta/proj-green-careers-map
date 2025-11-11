@@ -8,13 +8,16 @@ import "./App.css";
 
 function App() {
   const [activeModal, setActiveModal] = useState("");
+  const [selectedJob, setSelectedJob] = useState(null);
 
-  const onJobInfoClick = () => {
+  const onJobInfoClick = (job) => {
+    setSelectedJob(job);
     setActiveModal("job-info");
   };
 
   const closeModal = () => {
     setActiveModal("");
+    setSelectedJob(null);
   };
 
   useEffect(() => {
@@ -39,12 +42,12 @@ function App() {
 
   return (
     <div className="app">
+      <Header />
       <div className="app__content">
-        <Header />
         <Home onJobInfoClick={onJobInfoClick} />
-        <Footer />
       </div>
-      <JobInfoModal activeModal={activeModal} closeModal={closeModal} />
+      <Footer />
+      <JobInfoModal activeModal={activeModal} closeModal={closeModal} jobData={selectedJob} />
     </div>
   );
 }

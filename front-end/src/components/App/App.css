@@ -1,4 +1,15 @@
 .app {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app__content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
   max-width: 1440px;
   margin: 0 auto;
+  width: 100%;
 }

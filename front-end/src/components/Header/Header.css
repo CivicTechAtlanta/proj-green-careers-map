@@ -1,8 +1,32 @@
 .header {
-  background-color: lightblue;
+  background-color: lightgreen;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .header__title {
   padding: 20px;
   margin: 0;
+  font-family: 'Arial Black', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 900;
+  font-size: 2.5rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+  .header {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .header__title {
+    font-size: 1.8rem;
+    padding: 15px;
+    letter-spacing: 0.5px;
+  }
 }

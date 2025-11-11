@@ -1,0 +1,40 @@
+.job-info {
+  max-width: 600px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.job-info__title {
+  margin: 0 0 20px 0;
+  color: #333;
+  font-size: 1.8rem;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 10px;
+}
+
+.job-info__section {
+  margin-bottom: 20px;
+}
+
+.job-info__section h3 {
+  margin: 0 0 8px 0;
+  color: #555;
+  font-size: 1.2rem;
+}
+
+.job-info__section p {
+  margin: 0;
+  line-height: 1.5;
+  color: #666;
+}
+
+.job-info__metadata {
+  border-top: 1px solid #ddd;
+  padding-top: 15px;
+  margin-top: 20px;
+}
+
+.job-info__metadata p {
+  margin: 5px 0;
+  color: #777;
+}

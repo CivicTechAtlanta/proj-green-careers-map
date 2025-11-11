@@ -1,9 +1,23 @@
 .footer {
-  background: lightcoral;
+  background: lightgreen;
 }
 
 .footer__copyright {
   margin: 0;
   padding: 20px;
   text-align: center;
+}
+
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+  .footer {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .footer__copyright {
+    padding: 15px;
+    font-size: 14px;
+  }
 }
