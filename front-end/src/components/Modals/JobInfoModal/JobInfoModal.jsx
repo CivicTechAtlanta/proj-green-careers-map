@@ -1,48 +1,18 @@
 import "./JobInfoModal.css";
 import "../Modals.css";
 
+import icon from "../../../assets/react.svg";
+
 function JobInfoModal({ activeModal, closeModal, jobData }) {
   if (!jobData) {
     return null;
   }
 
+  console.log(jobData);
+
   return (
     <div className={`modal ${activeModal === "job-info" && "modal__open"}`}>
       <div className="modal__content">
-        <div className="job-info">
-          <h2 className="job-info__title">{jobData.job_name}</h2>
-          
-          <div className="job-info__section">
-            <h3>Description</h3>
-            <p>{jobData.description}</p>
-          </div>
-
-          <div className="job-info__section">
-            <h3>Required Skills</h3>
-            <p>{jobData.required_skills}</p>
-          </div>
-
-          <div className="job-info__section">
-            <h3>Required Education</h3>
-            <p>{jobData.required_education}</p>
-          </div>
-
-          <div className="job-info__section">
-            <h3>Experience</h3>
-            <p>{jobData.experience}</p>
-          </div>
-
-          <div className="job-info__section">
-            <h3>Pay Information</h3>
-            <p>{jobData.payinfo}</p>
-          </div>
-
-          <div className="job-info__metadata">
-            <p><strong>Category:</strong> {jobData.category}</p>
-            <p><strong>Career Level:</strong> {jobData.career_level}</p>
-          </div>
-        </div>
-        
         <button
           className="modal__close-button"
           type="button"
@@ -50,6 +20,66 @@ function JobInfoModal({ activeModal, closeModal, jobData }) {
         >
           ×
         </button>
+        <div className="job-info">
+          <header className="job-info__header">
+            <img className="job-info__icon" src={icon} alt="job-info icon" />
+            <div className="job-info__title-content">
+              <h2 className="job-info__title">{jobData.job_name}</h2>
+              <p className="job-info__category">{jobData.category}</p>
+            </div>
+          </header>
+          <div className="job-info__section">
+            <h3>Job Description</h3>
+            <p>{jobData.description}</p>
+          </div>
+          <div className="job-info__section">
+            <div className="job-info__container">
+              <div className="job-info__icon-container">
+                <img
+                  className="job-info__icon"
+                  src={icon}
+                  alt="job-info icon"
+                />
+                <div className="job-info__experience-container">
+                  <h3>Compensation</h3>
+                  <p>{jobData.pay_info}</p>
+                </div>
+              </div>
+              <div className="job-info__icon-container">
+                <img
+                  className="job-info__icon"
+                  src={icon}
+                  alt="job-info icon"
+                />
+                <div className="job-info__experience-container">
+                  <h3>Experience Level</h3>
+                  <p>{jobData.career_level}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="job-info__section">
+            <div className="job-info__icon-container">
+              <img className="job-info__icon" src={icon} alt="job-info icon" />
+              <div className="job-info__experience-container">
+                <h3>Education Requirements</h3>
+                <p>{jobData.required_education}</p>
+              </div>
+            </div>
+          </div>
+          <div className="job-info__section">
+            <div className="job-info__education-container">
+              <h3>Experience Requirements</h3>
+            </div>
+            <p>{jobData.experience}</p>
+          </div>
+          <div className="job-info__section">
+            <div className="job-info__education-container">
+              <h3>Key Skills</h3>
+            </div>
+            <p>{jobData.required_skills}</p>
+          </div>
+        </div>
       </div>
     </div>
   );

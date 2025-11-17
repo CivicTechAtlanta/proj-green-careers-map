@@ -4,20 +4,69 @@
   overflow-y: auto;
 }
 
+.job-info__header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.job-info__icon-container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.job-info__icon {
+  margin: 0 10px 0 0;
+  align-self: flex-start;
+  height: 30px;
+  width: 30px;
+}
+
+.job-info__title-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin: 0 0 40px 20px;
+}
+
 .job-info__title {
-  margin: 0 0 20px 0;
+  margin: 0;
   color: #333;
   font-size: 1.8rem;
-  border-bottom: 2px solid #007bff;
   padding-bottom: 10px;
+}
+
+.job-info__category {
+  padding: 5px 10px;
+  border: solid 2px rgb(255, 195, 66);
+  border-radius: 30px;
+  font-size: 24px;
+  color: rgb(255, 195, 66);
+  box-sizing: border-box;
 }
 
 .job-info__section {
   margin-bottom: 20px;
 }
 
+.job-info__container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.job-info__compensation-container,
+.job-info__education-container,
+.job-info__experience-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
 .job-info__section h3 {
-  margin: 0 0 8px 0;
+  margin: 0 0 15px 0;
   color: #555;
   font-size: 1.2rem;
 }
