@@ -3,6 +3,7 @@ import "../Modals.css";
 
 import icon from "../../../assets/react.svg";
 import dollarIcon from "../../../assets/dollar-sign.svg";
+import trendingUpIcon from "../../../assets/trending-up.svg";
 
 function JobInfoModal({ activeModal, closeModal, jobData }) {
   if (!jobData) {
@@ -49,8 +50,8 @@ function JobInfoModal({ activeModal, closeModal, jobData }) {
               <div className="job-info__icon-container">
                 <img
                   className="job-info__icon"
-                  src={icon}
-                  alt="job-info icon"
+                  src={trendingUpIcon}
+                  alt="experience level icon"
                 />
                 <div className="job-info__experience-container">
                   <h3>Experience Level</h3>
