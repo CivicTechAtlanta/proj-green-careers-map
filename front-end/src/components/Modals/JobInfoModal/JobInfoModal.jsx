@@ -60,7 +60,15 @@ function JobInfoModal({ activeModal, closeModal, jobData }) {
             <img className="job-info__icon" src={icon} alt="job-info icon" />
             <div className="job-info__title-content">
               <h2 className="job-info__title">{jobData.job_name}</h2>
-              <p className="job-info__category">{jobData.category}</p>
+              <p 
+                className="job-info__category"
+                style={{ 
+                  borderColor: jobData.categoryColor || 'rgb(255, 195, 66)', 
+                  color: jobData.categoryColor || 'rgb(255, 195, 66)' 
+                }}
+              >
+                {jobData.category}
+              </p>
             </div>
           </header>
           <div className="job-info__section">
