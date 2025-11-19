@@ -2,7 +2,6 @@ import { useEffect, useRef } from "react";
 import "./JobInfoModal.css";
 import "../Modals.css";
 
-import icon from "../../../assets/react.svg";
 import dollarIcon from "../../../assets/dollar-sign.svg";
 import trendingUpIcon from "../../../assets/trending-up.svg";
 import graduationCapIcon from "../../../assets/graduation-cap.svg";
@@ -57,7 +56,18 @@ function JobInfoModal({ activeModal, closeModal, jobData }) {
         </button>
         <div className="job-info" ref={jobInfoRef}>
           <header className="job-info__header">
-            <img className="job-info__icon" src={icon} alt="job-info icon" />
+            <svg 
+              className="job-info__icon" 
+              viewBox="0 0 24 24" 
+              fill="none" 
+              stroke={jobData.categoryColor || 'rgb(255, 195, 66)'} 
+              strokeWidth="2" 
+              strokeLinecap="round" 
+              strokeLinejoin="round"
+            >
+              <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+              <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+            </svg>
             <div className="job-info__title-content">
               <h2 className="job-info__title">{jobData.job_name}</h2>
               <p 
