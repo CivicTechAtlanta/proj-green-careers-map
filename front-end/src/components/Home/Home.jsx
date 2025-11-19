@@ -21,8 +21,6 @@ function Home({ onJobInfoClick }) {
 
         const jobsData = await response.json();
 
-        console.log('Fetch response:', jobsData);
-
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
