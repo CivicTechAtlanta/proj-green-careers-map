@@ -2,6 +2,7 @@ import "./JobInfoModal.css";
 import "../Modals.css";
 
 import icon from "../../../assets/react.svg";
+import dollarIcon from "../../../assets/dollar-sign.svg";
 
 function JobInfoModal({ activeModal, closeModal, jobData }) {
   if (!jobData) {
@@ -37,12 +38,12 @@ function JobInfoModal({ activeModal, closeModal, jobData }) {
               <div className="job-info__icon-container">
                 <img
                   className="job-info__icon"
-                  src={icon}
-                  alt="job-info icon"
+                  src={dollarIcon}
+                  alt="compensation icon"
                 />
                 <div className="job-info__experience-container">
                   <h3>Compensation</h3>
-                  <p>{jobData.pay_info}</p>
+                  <p>{jobData.payinfo}</p>
                 </div>
               </div>
               <div className="job-info__icon-container">
