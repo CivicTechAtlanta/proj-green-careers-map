@@ -6,6 +6,12 @@ import dollarIcon from "../../../assets/dollar-sign.svg";
 import trendingUpIcon from "../../../assets/trending-up.svg";
 import graduationCapIcon from "../../../assets/graduation-cap.svg";
 
+const levelMap = {
+  1: "Entry",
+  2: "Mid",
+  3: "Late Career",
+};
+
 function JobInfoModal({ activeModal, closeModal, jobData }) {
   const jobInfoRef = useRef(null);
 
@@ -120,7 +126,7 @@ function JobInfoModal({ activeModal, closeModal, jobData }) {
                 />
                 <div className="job-info__experience-container">
                   <h3>Experience Level</h3>
-                  <p>{jobData.career_level}</p>
+                  <p>{levelMap[jobData.career_level] || jobData.career_level}</p>
                 </div>
               </div>
             </div>

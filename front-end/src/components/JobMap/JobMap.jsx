@@ -197,43 +197,43 @@ function JobMap({ onJobInfoClick, jobs }) {
       ) : (
         <>
           <div className={`table-container ${visibleCategories.length > 5 ? 'scrollable' : ''}`}>
-          <table className="job-map-table">
-        <thead>
-          <tr>
-            <th>
-              <button className="corner-button" onClick={handleSortClick}>
-                {isReversed ? "▲" : "▼"}
-              </button>
-            </th>
-            {visibleCategories.map((category, index) => (
-              <th key={index} className={`category-header column-${categories.indexOf(category) + 1}`}>
-                <div className="category-header-wrapper">
-                  <button 
-                    className="hide-column-btn" 
-                    onClick={() => toggleColumnVisibility(category)}
-                    title="Hide column"
-                  >
-                    ✕
-                  </button>
-                  <span>{category}</span>
-                </div>
-              </th>
-            ))}
-          </tr>
-        </thead>
+            <table className="job-map-table">
+              <thead>
+                <tr>
+                  <th>
+                    <button className="corner-button" onClick={handleSortClick}>
+                      {isReversed ? "▲" : "▼"}
+                    </button>
+                  </th>
+                  {visibleCategories.map((category, index) => (
+                    <th key={index} className={`category-header column-${categories.indexOf(category) + 1}`}>
+                      <button 
+                        className="hide-column-btn" 
+                        onClick={() => toggleColumnVisibility(category)}
+                        title="Hide column"
+                      >
+                        ✕
+                      </button>
+                      <span>{category}</span>
+                    </th>
+                  ))}
+                </tr>
+              </thead>
         <tbody>
           {sortedTiers.map((tier, rowIndex) => (
             <tr key={rowIndex}>
               <td className="tier-header">{levelMap[tier] || `Level ${tier}`}</td>
               {visibleCategories.map((category, colIndex) => {
                 const cellJobs = getJobsForCell(category, tier);
+                const columnIndex = categories.indexOf(category) + 1;
+                const categoryColor = categoryColors[columnIndex];
                 return (
-                  <td key={colIndex} className={`job-cell column-${categories.indexOf(category) + 1}`}>
+                  <td key={colIndex} className={`job-cell column-${columnIndex}`}>
                     {cellJobs.map((job, jobIndex) => (
                       <div key={job.id || jobIndex} className="job-button-container">
                         <button
                           className="job-button"
-                          onClick={() => onJobInfoClick(job)}
+                          onClick={() => onJobInfoClick({ ...job, categoryColor })}
                         >
                           <div className="job-name">{job.job_name}</div>
                           <div className="job-pay">{job.payinfo}</div>

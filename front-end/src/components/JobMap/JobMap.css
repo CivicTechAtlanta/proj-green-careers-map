@@ -17,7 +17,7 @@
 }
 
 .tags-section {
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 }
 
 .tags-section h3 {
@@ -151,8 +151,8 @@
 
 .table-container {
   width: 100%;
-  padding-top: 40px;
-  margin-top: -40px;
+  padding-top: 50px;
+  margin-top: 20px;
 }
 
 .table-container.scrollable {
@@ -181,12 +181,15 @@
 .job-map-table {
   width: 95%;
   min-width: 1200px;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   border-top: none;
   border-left: none;
   border-right: none;
   border-bottom: 0.25px solid black;
   table-layout: fixed;
+  border-radius: 12px;
+  overflow: visible;
 }
 
 .job-map-table th:first-child,
@@ -245,6 +248,31 @@
   border-right: none !important;
 }
 
+/* Rounded corners for table */
+.job-map-table thead tr:first-child th:first-child {
+  border-top-left-radius: 12px;
+}
+
+.job-map-table thead tr:first-child th:nth-child(2) {
+  border-top-left-radius: 12px;
+}
+
+.job-map-table thead tr:first-child th:last-child {
+  border-top-right-radius: 12px;
+}
+
+.job-map-table tbody tr:first-child td:first-child {
+  border-top-left-radius: 12px;
+}
+
+.job-map-table tbody tr:last-child td:first-child {
+  border-bottom-left-radius: 12px;
+}
+
+.job-map-table tbody tr:last-child td:last-child {
+  border-bottom-right-radius: 12px;
+}
+
 .category-header {
   font-weight: bold;
   font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
@@ -252,10 +280,6 @@
   letter-spacing: 0.5px;
   text-transform: uppercase;
   position: relative;
-}
-
-.category-header-wrapper {
-  display: inline-block;
 }
 
 .hide-column-btn {
@@ -290,8 +314,8 @@
 }
 
 .hidden-columns-section {
-  margin-top: -20px;
-  margin-bottom: 40px;
+  margin-top: 0;
+  margin-bottom: 20px;
   display: flex;
   align-items: center;
   gap: 8px;

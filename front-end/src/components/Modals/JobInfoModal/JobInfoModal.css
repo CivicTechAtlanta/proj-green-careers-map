@@ -56,6 +56,9 @@
   align-self: flex-start;
   height: 24px;
   width: 24px;
+  min-width: 24px;
+  min-height: 24px;
+  flex-shrink: 0;
 }
 
 .job-info__title-content {
@@ -89,6 +92,7 @@
 .job-info__container {
   display: flex;
   justify-content: space-between;
+  gap: 40px;
 }
 
 .job-info__compensation-container,
