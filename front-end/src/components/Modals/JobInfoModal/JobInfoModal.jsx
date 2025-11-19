@@ -79,11 +79,6 @@ function JobInfoModal({ activeModal, closeModal, jobData }) {
               </div>
             </div>
           )}
-
-          <div className="job-info__metadata">
-            <p><strong>Category:</strong> {jobData.category}</p>
-            <p><strong>Career Level:</strong> {jobData.career_level}</p>
-          </div>
         </div>
         
         <button
