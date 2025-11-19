@@ -4,6 +4,7 @@ import "../Modals.css";
 import icon from "../../../assets/react.svg";
 import dollarIcon from "../../../assets/dollar-sign.svg";
 import trendingUpIcon from "../../../assets/trending-up.svg";
+import graduationCapIcon from "../../../assets/graduation-cap.svg";
 
 function JobInfoModal({ activeModal, closeModal, jobData }) {
   if (!jobData) {
@@ -62,7 +63,7 @@ function JobInfoModal({ activeModal, closeModal, jobData }) {
           </div>
           <div className="job-info__section">
             <div className="job-info__icon-container">
-              <img className="job-info__icon" src={icon} alt="job-info icon" />
+              <img className="job-info__icon" src={graduationCapIcon} alt="education icon" />
               <div className="job-info__experience-container">
                 <h3>Education Requirements</h3>
                 <p>{jobData.required_education}</p>
