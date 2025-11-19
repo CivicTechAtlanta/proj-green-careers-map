@@ -28,6 +28,18 @@ function ConstructJobsTable(jobs) {
   return { categories, tiers };
 }
 
+// Category color mapping based on column colors
+const categoryColors = {
+  1: '#f1c40f', // yellow
+  2: '#9b59b6', // plum
+  3: '#27ae60', // green
+  4: '#3498db', // sky blue
+  5: '#e67e22', // orange
+  6: '#e91e63', // pink
+  7: '#2980b9', // blue
+  8: '#1abc9c', // mint
+};
+
 function JobMap({ onJobInfoClick, jobs }) {
   const [isReversed, setIsReversed] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -102,17 +114,20 @@ function JobMap({ onJobInfoClick, jobs }) {
                 const cellJobs = getJobsForCell(category, tier);
                 return (
                   <td key={colIndex} className={`job-cell column-${colIndex + 1}`}>
-                    {cellJobs.map((job, jobIndex) => (
-                      <div key={job.id || jobIndex} className="job-button-container">
-                        <button
-                          className="job-button"
-                          onClick={() => onJobInfoClick(job)}
-                        >
-                          {job.job_name}
-                        </button>
-                        <div className="tooltip">{job.payinfo}</div>
-                      </div>
-                    ))}
+                    {cellJobs.map((job, jobIndex) => {
+                      const categoryColor = categoryColors[colIndex + 1] || '#f1c40f';
+                      return (
+                        <div key={job.id || jobIndex} className="job-button-container">
+                          <button
+                            className="job-button"
+                            onClick={() => onJobInfoClick({ ...job, categoryColor })}
+                          >
+                            {job.job_name}
+                          </button>
+                          <div className="tooltip">{job.payinfo}</div>
+                        </div>
+                      );
+                    })}
                   </td>
                 );
               })}

@@ -64,21 +64,6 @@ docker compose ps
 
 ---
 
-## Option B: Run SQLite Prototype (Python)
-
-If you just want to generate a small database from the CSV:
-
-```sh
-cd backend
-python create_database.py
-```
-
-This will:
-
-- Read `jobs.csv`
-- Create `jobs.db` in the backend folder
-- Insert all jobs into a `jobs` table
-
 ### Schema
 
 ```sql
