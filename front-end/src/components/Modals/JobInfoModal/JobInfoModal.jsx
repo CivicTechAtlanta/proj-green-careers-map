@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import "./JobInfoModal.css";
 import "../Modals.css";
 
@@ -7,6 +8,37 @@ import trendingUpIcon from "../../../assets/trending-up.svg";
 import graduationCapIcon from "../../../assets/graduation-cap.svg";
 
 function JobInfoModal({ activeModal, closeModal, jobData }) {
+  const jobInfoRef = useRef(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const element = jobInfoRef.current;
+      if (!element) return;
+
+      const { scrollTop, scrollHeight, clientHeight } = element;
+      const canScrollUp = scrollTop > 0;
+      const canScrollDown = scrollTop + clientHeight < scrollHeight - 1;
+
+      element.classList.toggle('can-scroll-up', canScrollUp);
+      element.classList.toggle('can-scroll-down', canScrollDown);
+    };
+
+    const element = jobInfoRef.current;
+    if (element) {
+      handleScroll(); // Initial check
+      element.addEventListener('scroll', handleScroll);
+      
+      // Check on resize
+      const resizeObserver = new ResizeObserver(handleScroll);
+      resizeObserver.observe(element);
+
+      return () => {
+        element.removeEventListener('scroll', handleScroll);
+        resizeObserver.disconnect();
+      };
+    }
+  }, [jobData, activeModal]);
+
   if (!jobData) {
     return null;
   }
@@ -23,7 +55,7 @@ function JobInfoModal({ activeModal, closeModal, jobData }) {
         >
           ×
         </button>
-        <div className="job-info">
+        <div className="job-info" ref={jobInfoRef}>
           <header className="job-info__header">
             <img className="job-info__icon" src={icon} alt="job-info icon" />
             <div className="job-info__title-content">

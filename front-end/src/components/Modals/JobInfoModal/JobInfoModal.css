@@ -2,6 +2,41 @@
   max-height: 80vh;
   overflow-y: auto;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  position: relative;
+}
+
+/* Scroll indicators */
+.job-info::before,
+.job-info::after {
+  content: '';
+  position: sticky;
+  display: block;
+  width: 100%;
+  height: 20px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 10;
+}
+
+.job-info::before {
+  top: 0;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
+  margin-bottom: -20px;
+}
+
+.job-info::after {
+  bottom: 0;
+  background: linear-gradient(to top, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
+  margin-top: -20px;
+}
+
+.job-info.can-scroll-up::before {
+  opacity: 1;
+}
+
+.job-info.can-scroll-down::after {
+  opacity: 1;
 }
 
 .job-info__header {
