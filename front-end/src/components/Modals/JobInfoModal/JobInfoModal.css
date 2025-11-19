@@ -39,10 +39,10 @@
 }
 
 .job-info__category {
-  padding: 5px 10px;
+  padding: 4px 12px;
   border: solid 2px rgb(255, 195, 66);
   border-radius: 30px;
-  font-size: 24px;
+  font-size: 14px;
   color: rgb(255, 195, 66);
   box-sizing: border-box;
 }
