@@ -15,12 +15,11 @@ function Home({ onJobInfoClick }) {
         setLoading(true);
         setError(null);
         
-        // Replace with your actual API endpoint
-        const response = await fetch('http://localhost:8055/items/jobs');
+        // API endpoint from environment variable, fallback to localhost for development
+        const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8055';
+        const response = await fetch(`${apiUrl}/items/jobs`);
 
         const jobsData = await response.json();
-
-        console.log('Fetch response:', jobsData);
 
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
