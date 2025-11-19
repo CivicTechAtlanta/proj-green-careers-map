@@ -17,6 +17,7 @@ function Home({ onJobInfoClick }) {
         
         // API endpoint from environment variable, fallback to localhost for development
         const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8055';
+        
         const response = await fetch(`${apiUrl}/items/jobs`);
 
         const jobsData = await response.json();
