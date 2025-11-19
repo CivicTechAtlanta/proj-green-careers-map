@@ -9,6 +9,20 @@ import graduationCapIcon from "../../../assets/graduation-cap.svg";
 function JobInfoModal({ activeModal, closeModal, jobData }) {
   const jobInfoRef = useRef(null);
 
+  // Disable body scroll when modal is open
+  useEffect(() => {
+    if (activeModal === "job-info") {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [activeModal]);
+
+  // Handle scroll indicators
   useEffect(() => {
     const handleScroll = () => {
       const element = jobInfoRef.current;
