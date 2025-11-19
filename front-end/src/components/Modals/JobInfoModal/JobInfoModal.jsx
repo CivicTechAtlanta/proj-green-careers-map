@@ -37,6 +37,49 @@ function JobInfoModal({ activeModal, closeModal, jobData }) {
             <p>{jobData.payinfo}</p>
           </div>
 
+          {(jobData.linkedin_search || jobData.indeed_search) && (
+            <div className="job-info__section">
+              <h3>External Searches</h3>
+              <div className="external-search-buttons">
+                {jobData.linkedin_search && (
+                  <a 
+                    href={jobData.linkedin_search} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="external-search-btn external-search-btn--linkedin"
+                  >
+                    <span className="btn-icon">in</span>
+                    LinkedIn Jobs
+                  </a>
+                )}
+                {jobData.indeed_search && (
+                  <a 
+                    href={jobData.indeed_search} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="external-search-btn external-search-btn--indeed"
+                  >
+                    <span className="btn-icon">i</span>
+                    Indeed Jobs
+                  </a>
+                )}
+              </div>
+            </div>
+          )}
+
+          {jobData.tags && jobData.tags.length > 0 && (
+            <div className="job-info__section">
+              <h3>Tags</h3>
+              <div className="job-tags">
+                {jobData.tags.map((tag, index) => (
+                  <span key={index} className="job-tag">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+
           <div className="job-info__metadata">
             <p><strong>Category:</strong> {jobData.category}</p>
             <p><strong>Career Level:</strong> {jobData.career_level}</p>

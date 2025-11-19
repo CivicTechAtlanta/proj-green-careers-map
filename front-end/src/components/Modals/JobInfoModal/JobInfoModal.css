@@ -2,6 +2,7 @@
   max-width: 600px;
   max-height: 80vh;
   overflow-y: auto;
+  font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
 }
 
 .job-info__title {
@@ -37,4 +38,73 @@
 .job-info__metadata p {
   margin: 5px 0;
   color: #777;
+}
+
+.job-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.job-tag {
+  background-color: #007bff;
+  color: white;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.external-search-buttons {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.external-search-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: white;
+  text-decoration: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.external-search-btn:hover {
+  text-decoration: none;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.external-search-btn--linkedin {
+  background-color: #0077b5;
+}
+
+.external-search-btn--linkedin:hover {
+  background-color: #005885;
+}
+
+.external-search-btn--indeed {
+  background-color: #2164f3;
+}
+
+.external-search-btn--indeed:hover {
+  background-color: #1a4ec4;
+}
+
+.external-search-btn .btn-icon {
+  font-weight: 700;
+  font-size: 16px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  padding: 2px 6px;
+  min-width: 24px;
+  text-align: center;
 }
