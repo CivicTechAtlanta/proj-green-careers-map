@@ -1,24 +1,107 @@
 .job-info {
-  max-width: 600px;
   max-height: 80vh;
   overflow-y: auto;
-  font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  position: relative;
+}
+
+/* Scroll indicators */
+.job-info::before,
+.job-info::after {
+  content: '';
+  position: sticky;
+  display: block;
+  width: 100%;
+  height: 40px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 10;
+}
+
+.job-info::before {
+  top: 0;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.95) 30%, rgba(255, 255, 255, 0) 100%);
+  margin-bottom: -40px;
+}
+
+.job-info::after {
+  bottom: 0;
+  background: linear-gradient(to top, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.95) 30%, rgba(255, 255, 255, 0) 100%);
+  margin-top: -40px;
+}
+
+.job-info.can-scroll-up::before {
+  opacity: 1;
+}
+
+.job-info.can-scroll-down::after {
+  opacity: 1;
+}
+
+.job-info__header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.job-info__icon-container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.job-info__icon {
+  margin: 0 10px 0 0;
+  align-self: flex-start;
+  height: 24px;
+  width: 24px;
+}
+
+.job-info__title-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin: 0 0 40px 20px;
 }
 
 .job-info__title {
-  margin: 0 0 20px 0;
+  margin: 0;
   color: #333;
   font-size: 1.8rem;
-  border-bottom: 2px solid #007bff;
   padding-bottom: 10px;
+}
+
+.job-info__category {
+  padding: 4px 12px;
+  border: solid 2px rgb(255, 195, 66);
+  border-radius: 30px;
+  font-size: 14px;
+  color: rgb(255, 195, 66);
+  box-sizing: border-box;
 }
 
 .job-info__section {
   margin-bottom: 20px;
 }
 
+.job-info__container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.job-info__compensation-container,
+.job-info__education-container,
+.job-info__experience-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
 .job-info__section h3 {
-  margin: 0 0 8px 0;
+  margin: 0 0 15px 0;
   color: #555;
   font-size: 1.2rem;
 }
@@ -38,22 +121,6 @@
 .job-info__metadata p {
   margin: 5px 0;
   color: #777;
-}
-
-.job-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 8px;
-}
-
-.job-tag {
-  background-color: #007bff;
-  color: white;
-  padding: 4px 10px;
-  border-radius: 12px;
-  font-size: 11px;
-  font-weight: 500;
 }
 
 .external-search-buttons {

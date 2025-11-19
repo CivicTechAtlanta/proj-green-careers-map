@@ -28,6 +28,18 @@ function ConstructJobsTable(jobs) {
   return { categories, tiers };
 }
 
+// Category color mapping based on column colors
+const categoryColors = {
+  1: '#f1c40f', // yellow
+  2: '#9b59b6', // plum
+  3: '#27ae60', // green
+  4: '#3498db', // sky blue
+  5: '#e67e22', // orange
+  6: '#e91e63', // pink
+  7: '#2980b9', // blue
+  8: '#1abc9c', // mint
+};
+
 function JobMap({ onJobInfoClick, jobs }) {
   const [isReversed, setIsReversed] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");

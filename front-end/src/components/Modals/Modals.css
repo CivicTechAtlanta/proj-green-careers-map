@@ -4,7 +4,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: #0000004d;
+  background-color: #0000008d;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -18,24 +18,25 @@
 .modal__content {
   background-color: #fff;
   position: relative;
-  padding: 28px 28px 36px;
+  padding: 48px;
   box-sizing: border-box;
-  max-width: 900px;
-  width: 100%;
-  border-radius: 16px;
+  max-width: 600px;
+  width: auto;
+  min-width: 400px;
+  border-radius: 15px;
 }
 
 .modal__close-button {
   position: absolute;
-  background-color: #d3d3d3;
+  background-color: transparent;
   color: #666;
   top: 15px;
   right: 15px;
   width: 40px;
   height: 40px;
-  border-radius: 50%;
   border: none;
-  font-size: 18px;
+  border-radius: 50%;
+  font-size: 34px;
   font-weight: bold;
   display: flex;
   align-items: center;
