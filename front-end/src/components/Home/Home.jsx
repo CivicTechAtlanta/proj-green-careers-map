@@ -16,7 +16,7 @@ function Home({ onJobInfoClick }) {
         setError(null);
         
         // API endpoint from environment variable, fallback to localhost for development
-        const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8055';
+        const apiUrl = import.meta.env.VITE_API_URL || 'https://green-careers-map-demo.fly.dev';
         
         const response = await fetch(`${apiUrl}/items/jobs`);
 
@@ -56,10 +56,16 @@ function Home({ onJobInfoClick }) {
   }
 
   if (error) {
-
     return (
       <section className="home">
-        <div className="error">Error: {error}</div>
+        <div className="error-container">
+          <div className="error-icon">⚠️</div>
+          <h2 className="error-title">Oops! Something went wrong</h2>
+          <p className="error-message">{error}</p>
+          <button className="error-retry" onClick={() => window.location.reload()}>
+            Try Again
+          </button>
+        </div>
       </section>
     );
   }
