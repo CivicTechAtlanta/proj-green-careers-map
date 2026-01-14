@@ -46,6 +46,9 @@ function JobMap({ onJobInfoClick, jobs }) {
   const [selectedFields, setSelectedFields] = useState([]);
   const [selectedSkills, setSelectedSkills] = useState([]);
   const [hiddenColumns, setHiddenColumns] = useState([]);
+  const [isFieldDropdownOpen, setIsFieldDropdownOpen] = useState(false);
+  const [isSkillsDropdownOpen, setIsSkillsDropdownOpen] = useState(false);
+  const [isInitialized, setIsInitialized] = useState(false);
   const tableContainerRef = useRef(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
@@ -84,7 +87,14 @@ function JobMap({ onJobInfoClick, jobs }) {
   ));
 
   // Extract unique categories and career levels from filtered job data
-  const { categories, tiers } = ConstructJobsTable(filteredJobs);
+  const { categories: allFilteredCategories, tiers } = ConstructJobsTable(filteredJobs);
+
+  // Limit displayed categories based on selected fields (max 5)
+  // If fields are selected, only show those fields (up to 5)
+  // If no fields are selected, show all available categories
+  const categories = selectedFields.length > 0
+    ? selectedFields.filter(field => allFilteredCategories.includes(field)).slice(0, 5)
+    : allFilteredCategories;
 
   // Sort tiers based on current order
   const sortedTiers = sortOrder === 'late-to-entry'
@@ -104,25 +114,35 @@ function JobMap({ onJobInfoClick, jobs }) {
     setSearchTerm(e.target.value);
   };
 
-  // Handle field dropdown change
-  const handleFieldChange = (e) => {
-    const value = e.target.value;
-    if (value && !selectedFields.includes(value)) {
-      setSelectedFields([...selectedFields, value]);
+  // Handle field checkbox toggle with max 5 columns
+  const handleFieldToggle = (field) => {
+    if (selectedFields.includes(field)) {
+      setSelectedFields(prev => prev.filter(f => f !== field));
+    } else {
+      // Only allow adding if we have fewer than 5 selected fields
+      if (selectedFields.length < 5) {
+        setSelectedFields([...selectedFields, field]);
+      }
     }
   };
 
-  // Handle skills dropdown change
-  const handleSkillsChange = (e) => {
-    const value = e.target.value;
-    if (value && !selectedSkills.includes(value)) {
-      setSelectedSkills([...selectedSkills, value]);
+  // Handle skills checkbox toggle
+  const handleSkillToggle = (skill) => {
+    if (selectedSkills.includes(skill)) {
+      setSelectedSkills(prev => prev.filter(s => s !== skill));
+    } else {
+      setSelectedSkills([...selectedSkills, skill]);
     }
   };
 
   // Remove individual field tag
   const removeField = (field) => {
     setSelectedFields(prev => prev.filter(f => f !== field));
+  };
+
+  // Remove individual skill tag
+  const removeSkill = (skill) => {
+    setSelectedSkills(prev => prev.filter(s => s !== skill));
   };
 
   // Clear all filters
@@ -181,6 +201,30 @@ function JobMap({ onJobInfoClick, jobs }) {
     }
   }, [visibleCategories, filteredJobs]);
 
+  // Initialize with first 5 fields when jobs load
+  useEffect(() => {
+    if (!isInitialized && jobs && jobs.length > 0) {
+      const uniqueCategories = Array.from(new Set(
+        jobs.filter(j => j.category).map(j => j.category)
+      ));
+      setSelectedFields(uniqueCategories.slice(0, 5));
+      setIsInitialized(true);
+    }
+  }, [jobs, isInitialized]);
+
+  // Close dropdowns when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (!event.target.closest('.multiselect-wrapper')) {
+        setIsFieldDropdownOpen(false);
+        setIsSkillsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
   return (
     <div className="map">
       <div className="new-header-section">
@@ -197,24 +241,91 @@ function JobMap({ onJobInfoClick, jobs }) {
           </select>
         </div>
 
-        <div className="filter-group">
+        <div className="filter-group multiselect-filter">
           <label>Filter by Field</label>
-          <select onChange={handleFieldChange} value="">
-            <option value="">All</option>
-            {allCategories.map(cat => (
-              <option key={cat} value={cat}>{cat}</option>
-            ))}
-          </select>
+          <div className="multiselect-wrapper">
+            <button
+              className="multiselect-trigger"
+              onClick={() => setIsFieldDropdownOpen(!isFieldDropdownOpen)}
+            >
+              {selectedFields.length === 0 ? 'All' : `${selectedFields.length} selected`}
+              <svg className="dropdown-arrow" viewBox="0 0 12 12">
+                <path fill="currentColor" d="M6 9L1 4h10z"/>
+              </svg>
+            </button>
+            {isFieldDropdownOpen && (
+              <div className="multiselect-dropdown">
+                {selectedFields.length >= 5 && (
+                  <div className="multiselect-max-warning">
+                    Maximum 5 fields can be displayed. Uncheck a field to select another.
+                  </div>
+                )}
+                {allCategories.map(cat => {
+                  const isChecked = selectedFields.includes(cat);
+                  const isDisabled = !isChecked && selectedFields.length >= 5;
+                  return (
+                    <label
+                      key={cat}
+                      className={`multiselect-option ${isDisabled ? 'multiselect-option--disabled' : ''}`}
+                    >
+                      <input
+                        type="checkbox"
+                        checked={isChecked}
+                        disabled={isDisabled}
+                        onChange={() => handleFieldToggle(cat)}
+                      />
+                      <span>{cat}</span>
+                    </label>
+                  );
+                })}
+              </div>
+            )}
+          </div>
         </div>
 
-        <div className="filter-group">
+        <div className="filter-group multiselect-filter">
           <label>Filter by Skills</label>
-          <select onChange={handleSkillsChange} value="">
-            <option value="">All</option>
-            {allTags.map(tag => (
-              <option key={tag} value={tag}>{tag}</option>
-            ))}
-          </select>
+          <div className="multiselect-wrapper">
+            <button
+              className="multiselect-trigger"
+              onClick={() => setIsSkillsDropdownOpen(!isSkillsDropdownOpen)}
+            >
+              {selectedSkills.length === 0 ? 'All' : `${selectedSkills.length} selected`}
+              <svg className="dropdown-arrow" viewBox="0 0 12 12">
+                <path fill="currentColor" d="M6 9L1 4h10z"/>
+              </svg>
+            </button>
+            {isSkillsDropdownOpen && (
+              <div className="multiselect-dropdown">
+                {allTags.map(tag => (
+                  <label key={tag} className="multiselect-option">
+                    <input
+                      type="checkbox"
+                      checked={selectedSkills.includes(tag)}
+                      onChange={() => handleSkillToggle(tag)}
+                    />
+                    <span>{tag}</span>
+                  </label>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="search-container-inline">
+          <div className="search-input-wrapper">
+            <svg className="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="m21 21-4.35-4.35"></path>
+            </svg>
+            <input
+              type="text"
+              placeholder="Search jobs..."
+              className="search-box"
+              value={searchTerm}
+              onChange={handleSearchChange}
+            />
+          </div>
         </div>
 
         <button className="clear-all-link" onClick={clearAllFilters}>
@@ -222,7 +333,7 @@ function JobMap({ onJobInfoClick, jobs }) {
         </button>
       </div>
 
-      {selectedFields.length > 0 && (
+      {(selectedFields.length > 0 || selectedSkills.length > 0) && (
         <div className="tags-selected-section">
           <span className="tags-label">Tags Selected</span>
           <div className="selected-tags-list">
@@ -232,24 +343,15 @@ function JobMap({ onJobInfoClick, jobs }) {
                 <button onClick={() => removeField(field)} aria-label={`Remove ${field}`}>×</button>
               </div>
             ))}
+            {selectedSkills.map(skill => (
+              <div key={skill} className="tag-pill">
+                {skill}
+                <button onClick={() => removeSkill(skill)} aria-label={`Remove ${skill}`}>×</button>
+              </div>
+            ))}
           </div>
         </div>
       )}
-      <div className="search-container">
-        <div className="search-input-wrapper">
-          <svg className="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <circle cx="11" cy="11" r="8"></circle>
-            <path d="m21 21-4.35-4.35"></path>
-          </svg>
-          <input
-            type="text"
-            placeholder="Search jobs..."
-            className="search-box"
-            value={searchTerm}
-            onChange={handleSearchChange}
-          />
-        </div>
-      </div>
       {hiddenColumns.length > 0 && (
         <div className="hidden-columns-section">
           <span className="hidden-columns-label">Hidden columns:</span>
@@ -293,13 +395,6 @@ function JobMap({ onJobInfoClick, jobs }) {
                     <th></th>
                     {visibleCategories.map((category, index) => (
                     <th key={index} className={`category-header column-${categories.indexOf(category) + 1}`}>
-                      <button 
-                        className="hide-column-btn" 
-                        onClick={() => toggleColumnVisibility(category)}
-                        title="Hide column"
-                      >
-                        ✕
-                      </button>
                       <span>{category}</span>
                     </th>
                   ))}
@@ -322,7 +417,6 @@ function JobMap({ onJobInfoClick, jobs }) {
                           onClick={() => onJobInfoClick({ ...job, categoryColor })}
                         >
                           <div className="job-name">{job.job_name}</div>
-                          <div className="job-pay">{job.payinfo}</div>
                         </button>
                       </div>
                     ))}

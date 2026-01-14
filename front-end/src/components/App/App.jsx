@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import Header from "../Header/Header";
 import Home from "../Home/Home";
 import Footer from "../Footer/Footer";
 import JobInfoModal from "../Modals/JobInfoModal/JobInfoModal";
@@ -42,7 +41,6 @@ function App() {
 
   return (
     <div className="app">
-      <Header />
       <div className="app__content">
         <Home onJobInfoClick={onJobInfoClick} />
       </div>

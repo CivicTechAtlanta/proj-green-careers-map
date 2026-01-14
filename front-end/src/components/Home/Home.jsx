@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import Hero from "../Hero/Hero";
+import ExploreFields from "../ExploreFields/ExploreFields";
 import JobMap from "../JobMap/JobMap";
 import "./Home.css";
 
@@ -72,6 +74,8 @@ function Home({ onJobInfoClick }) {
 
   return (
     <section className="home">
+      <Hero />
+      <ExploreFields />
       <JobMap onJobInfoClick={onJobInfoClick} jobs={jobs} />
     </section>
   );

@@ -90,8 +90,10 @@
 }
 
 .footer__icon {
-  font-size: 18px;
+  width: 18px;
+  height: 18px;
   flex-shrink: 0;
+  color: white;
 }
 
 .footer__link {
