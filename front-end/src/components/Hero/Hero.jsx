@@ -1,10 +1,21 @@
 import "./Hero.css";
 
+// Import hero image if it exists (Vite resolves this at build time)
+const heroImages = import.meta.glob("../../assets/images/hero/hero-main.{jpg,jpeg,png,webp}", { eager: true });
+const heroImage = Object.values(heroImages)[0]?.default || null;
+
 function Hero() {
   const scrollToCareersMap = () => {
     const mapElement = document.querySelector('.map');
     if (mapElement) {
       mapElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
+  const scrollToContact = () => {
+    const footerElement = document.querySelector('.footer');
+    if (footerElement) {
+      footerElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
 
@@ -37,19 +48,22 @@ function Hero() {
             <button className="hero__nav-btn hero__nav-btn--active" onClick={scrollToCareersMap}>
               Careers Map
             </button>
-            <a
-              href="mailto:peoplestown.prc@gmail.com?subject=Career%20Map%20Inquiry"
-              className="hero__nav-btn hero__nav-btn--outline"
-            >
+            <button className="hero__nav-btn hero__nav-btn--outline" onClick={scrollToContact}>
               Contact Us
-            </a>
+            </button>
           </nav>
         </div>
 
         {/* Hero Content */}
         <div className="hero__content">
-          <div className="hero__image-placeholder">
-            {/* Placeholder for construction workers image */}
+          <div className={`hero__image-container ${!heroImage ? 'hero__image-container--placeholder' : ''}`}>
+            {heroImage && (
+              <img
+                src={heroImage}
+                alt="Green careers workers"
+                className="hero__image"
+              />
+            )}
             <div className="hero__image-overlay">
               <div className="hero__text-box">
                 <h1 className="hero__title">Future-Proof Careers</h1>

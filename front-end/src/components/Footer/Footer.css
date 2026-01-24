@@ -260,5 +260,6 @@
   .footer__submit-btn {
     font-size: 14px;
     padding: 10px 20px;
+    align-self: center;
   }
 }

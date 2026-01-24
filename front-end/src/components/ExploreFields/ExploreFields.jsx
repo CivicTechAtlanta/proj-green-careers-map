@@ -1,6 +1,28 @@
 import { useState } from "react";
 import "./ExploreFields.css";
 
+// Import all field images that exist (Vite resolves this at build time)
+const fieldImageModules = import.meta.glob("../../assets/images/fields/*.{jpg,jpeg,png,webp}", { eager: true });
+
+// Create a mapping from field name to image
+const getFieldImage = (fieldKey) => {
+  const matchingPath = Object.keys(fieldImageModules).find(path =>
+    path.toLowerCase().includes(fieldKey.toLowerCase())
+  );
+  return matchingPath ? fieldImageModules[matchingPath].default : null;
+};
+
+const fieldImages = {
+  agriculture: getFieldImage("agriculture"),
+  building: getFieldImage("building"),
+  education: getFieldImage("education"),
+  energyEfficiency: getFieldImage("energy-efficiency"),
+  greenInfrastructure: getFieldImage("green-infrastructure"),
+  remediation: getFieldImage("remediation"),
+  renewableEnergy: getFieldImage("renewable-energy"),
+  transportation: getFieldImage("transportation"),
+};
+
 function ExploreFields() {
   const [activeTab, setActiveTab] = useState("Agriculture");
 
@@ -13,7 +35,8 @@ function ExploreFields() {
         "Urban Farm Manager",
         "Community Garden Coordinator",
         "Agricultural Technician"
-      ]
+      ],
+      image: fieldImages.agriculture
     },
     {
       name: "Building",
@@ -23,7 +46,8 @@ function ExploreFields() {
         "Construction Worker",
         "Electrician Apprentice",
         "HVAC Technician"
-      ]
+      ],
+      image: fieldImages.building
     },
     {
       name: "Education & Outreach",
@@ -33,7 +57,8 @@ function ExploreFields() {
         "Community Educator",
         "Outreach Coordinator",
         "Program Assistant"
-      ]
+      ],
+      image: fieldImages.education
     },
     {
       name: "Energy Efficiency",
@@ -43,7 +68,8 @@ function ExploreFields() {
         "Energy Auditor",
         "Weatherization Technician",
         "Building Performance Analyst"
-      ]
+      ],
+      image: fieldImages.energyEfficiency
     },
     {
       name: "Green Infrastructure",
@@ -53,7 +79,8 @@ function ExploreFields() {
         "Stormwater Technician",
         "Landscape Maintenance Worker",
         "Green Infrastructure Inspector"
-      ]
+      ],
+      image: fieldImages.greenInfrastructure
     },
     {
       name: "Remediation",
@@ -63,7 +90,8 @@ function ExploreFields() {
         "Environmental Technician",
         "Site Cleanup Crew Member",
         "Field Sampling Assistant"
-      ]
+      ],
+      image: fieldImages.remediation
     },
     {
       name: "Renewable Energy",
@@ -73,7 +101,8 @@ function ExploreFields() {
         "Solar Panel Installer",
         "Wind Turbine Technician",
         "Renewable Energy Technician"
-      ]
+      ],
+      image: fieldImages.renewableEnergy
     },
     {
       name: "Transportation",
@@ -83,7 +112,8 @@ function ExploreFields() {
         "Transit Operator",
         "Fleet Maintenance Technician",
         "Logistics Coordinator"
-      ]
+      ],
+      image: fieldImages.transportation
     }
   ];
 
@@ -112,8 +142,14 @@ function ExploreFields() {
 
         {/* Content */}
         <div className="explore-fields__content">
-          <div className="explore-fields__image-placeholder">
-            {/* Placeholder image */}
+          <div className={`explore-fields__image-container ${!activeField.image ? 'explore-fields__image-container--placeholder' : ''}`}>
+            {activeField.image && (
+              <img
+                src={activeField.image}
+                alt={activeField.title}
+                className="explore-fields__image"
+              />
+            )}
           </div>
 
           <div className="explore-fields__text-content">

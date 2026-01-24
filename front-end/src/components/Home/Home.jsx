@@ -49,17 +49,13 @@ function Home({ onJobInfoClick }) {
     fetchData();
   }, []); // Empty dependency array means this runs once on mount
 
-  if (loading) {
-    return (
-      <section className="home">
+  return (
+    <section className="home">
+      <Hero />
+      <ExploreFields />
+      {loading ? (
         <div className="loading">Loading...</div>
-      </section>
-    );
-  }
-
-  if (error) {
-    return (
-      <section className="home">
+      ) : error ? (
         <div className="error-container">
           <div className="error-icon">⚠️</div>
           <h2 className="error-title">Oops! Something went wrong</h2>
@@ -68,15 +64,9 @@ function Home({ onJobInfoClick }) {
             Try Again
           </button>
         </div>
-      </section>
-    );
-  }
-
-  return (
-    <section className="home">
-      <Hero />
-      <ExploreFields />
-      <JobMap onJobInfoClick={onJobInfoClick} jobs={jobs} />
+      ) : (
+        <JobMap onJobInfoClick={onJobInfoClick} jobs={jobs} />
+      )}
     </section>
   );
 }
