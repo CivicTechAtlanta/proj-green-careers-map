@@ -127,6 +127,11 @@
   max-width: calc(100vw - 40px);
 }
 
+.multiselect-dropdown--right {
+  left: auto;
+  right: 0;
+}
+
 .multiselect-option {
   display: flex;
   align-items: center;

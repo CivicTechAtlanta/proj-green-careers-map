@@ -52,6 +52,10 @@ function JobMap({ onJobInfoClick, jobs }) {
   const tableContainerRef = useRef(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
+  const fieldWrapperRef = useRef(null);
+  const skillsWrapperRef = useRef(null);
+  const [fieldDropdownAlignRight, setFieldDropdownAlignRight] = useState(false);
+  const [skillsDropdownAlignRight, setSkillsDropdownAlignRight] = useState(false);
 
   // Filter jobs based on search term, selected fields, and selected skills
   const filteredJobs = Array.isArray(jobs) ? jobs.filter(job => {
@@ -225,6 +229,28 @@ function JobMap({ onJobInfoClick, jobs }) {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  // Calculate dropdown positioning to prevent viewport overflow
+  useEffect(() => {
+    const calculatePosition = (wrapperRef, setAlignRight) => {
+      if (wrapperRef.current) {
+        const rect = wrapperRef.current.getBoundingClientRect();
+        const availableSpace = window.innerWidth - rect.right;
+        const dropdownWidth = 200; // min-width of trigger button
+
+        // If not enough space on right, align to right edge
+        setAlignRight(availableSpace < dropdownWidth);
+      }
+    };
+
+    if (isFieldDropdownOpen) {
+      calculatePosition(fieldWrapperRef, setFieldDropdownAlignRight);
+    }
+
+    if (isSkillsDropdownOpen) {
+      calculatePosition(skillsWrapperRef, setSkillsDropdownAlignRight);
+    }
+  }, [isFieldDropdownOpen, isSkillsDropdownOpen]);
+
   return (
     <div className="map">
       <div className="new-header-section">
@@ -243,7 +269,7 @@ function JobMap({ onJobInfoClick, jobs }) {
 
         <div className="filter-group multiselect-filter">
           <label>Filter by Field</label>
-          <div className="multiselect-wrapper">
+          <div className="multiselect-wrapper" ref={fieldWrapperRef}>
             <button
               className="multiselect-trigger"
               onClick={() => setIsFieldDropdownOpen(!isFieldDropdownOpen)}
@@ -254,7 +280,7 @@ function JobMap({ onJobInfoClick, jobs }) {
               </svg>
             </button>
             {isFieldDropdownOpen && (
-              <div className="multiselect-dropdown">
+              <div className={`multiselect-dropdown ${fieldDropdownAlignRight ? 'multiselect-dropdown--right' : ''}`}>
                 {selectedFields.length >= 5 && (
                   <div className="multiselect-max-warning">
                     Maximum 5 fields can be displayed. Uncheck a field to select another.
@@ -285,7 +311,7 @@ function JobMap({ onJobInfoClick, jobs }) {
 
         <div className="filter-group multiselect-filter">
           <label>Filter by Skills</label>
-          <div className="multiselect-wrapper">
+          <div className="multiselect-wrapper" ref={skillsWrapperRef}>
             <button
               className="multiselect-trigger"
               onClick={() => setIsSkillsDropdownOpen(!isSkillsDropdownOpen)}
@@ -296,7 +322,7 @@ function JobMap({ onJobInfoClick, jobs }) {
               </svg>
             </button>
             {isSkillsDropdownOpen && (
-              <div className="multiselect-dropdown">
+              <div className={`multiselect-dropdown ${skillsDropdownAlignRight ? 'multiselect-dropdown--right' : ''}`}>
                 {allTags.map(tag => (
                   <label key={tag} className="multiselect-option">
                     <input
