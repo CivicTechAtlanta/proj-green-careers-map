@@ -124,6 +124,7 @@
   max-height: 300px;
   overflow-y: auto;
   z-index: 100;
+  max-width: calc(100vw - 40px);
 }
 
 .multiselect-option {
@@ -226,7 +227,26 @@
 .selected-tags-list {
   display: flex;
   gap: 8px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.selected-tags-list::-webkit-scrollbar {
+  height: 6px;
+}
+
+.selected-tags-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.selected-tags-list::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+.selected-tags-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
 }
 
 .tag-pill {
@@ -331,6 +351,7 @@
 .table-container.scrollable {
   overflow-x: auto;
   padding-bottom: 10px;
+  -webkit-overflow-scrolling: touch;
 }
 
 .table-container.scrollable::-webkit-scrollbar {
@@ -349,6 +370,20 @@
 
 .table-container.scrollable::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+.table-container.scrollable::after {
+  content: '← Scroll →';
+  position: absolute;
+  bottom: 15px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 11px;
+  pointer-events: none;
+  opacity: 0.8;
 }
 
 .job-map-table {
@@ -714,6 +749,7 @@ tbody tr:last-child .tier-header {
 .navigation-wrapper {
   position: relative;
   width: 100%;
+  overflow: visible;
 }
 
 .nav-arrow {
@@ -750,11 +786,44 @@ tbody tr:last-child .tier-header {
   right: -24px;
 }
 
+/* Tablet Responsive */
+@media (max-width: 1024px) {
+  .map {
+    padding: 30px 20px;
+  }
+
+  .new-header-section h1 {
+    font-size: 28px;
+  }
+
+  .job-map-table {
+    min-width: 900px;
+  }
+}
+
 /* Mobile Responsive */
 @media (max-width: 768px) {
+  .map {
+    padding: 20px 16px;
+  }
+
+  .new-header-section {
+    margin-bottom: 20px;
+  }
+
+  .new-header-section h1 {
+    font-size: 24px;
+  }
+
+  .new-header-section p {
+    font-size: 14px;
+  }
+
   .filters-row {
     flex-direction: column;
     align-items: stretch;
+    gap: 16px;
+    padding-bottom: 16px;
   }
 
   .filter-group {
@@ -771,9 +840,15 @@ tbody tr:last-child .tier-header {
     padding-left: 0;
     margin-left: 0;
     border-left: none;
-    padding-top: 20px;
-    margin-top: 20px;
-    border-top: 2px solid #ddd;
+    padding-top: 16px;
+    margin-top: 0;
+    border-top: none;
+    width: 100%;
+  }
+
+  .search-input-wrapper {
+    width: 100%;
+    display: block;
   }
 
   .search-box {
@@ -783,13 +858,212 @@ tbody tr:last-child .tier-header {
   .clear-all-link {
     margin-left: 0;
     align-self: flex-start;
+    padding-bottom: 0;
+    margin-top: 8px;
+  }
+
+  .tags-selected-section {
+    gap: 8px;
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+  }
+
+  .table-container.scrollable::after {
+    font-size: 10px;
+    padding: 3px 10px;
+    bottom: 12px;
+    right: 16px;
+  }
+
+  .multiselect-dropdown {
+    max-width: calc(100vw - 32px);
+  }
+
+  .selected-tags-list {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 4px;
+  }
+
+  .tag-pill {
+    padding: 6px 12px;
+    font-size: 12px;
+    white-space: nowrap;
+    max-width: 250px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .table-container {
+    padding-top: 30px;
+    margin-top: 10px;
+  }
+
+  .job-map-table {
+    min-width: 600px;
+  }
+
+  .job-map-table th,
+  .job-map-table td {
+    padding: 8px 10px;
+    min-width: 120px;
+  }
+
+  .category-header {
+    font-size: 12px;
+  }
+
+  .hide-column-btn {
+    width: 20px;
+    height: 20px;
+    min-width: 20px;
+    min-height: 20px;
+    font-size: 12px;
+    top: -26px;
+  }
+
+  .nav-arrow {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
   }
 
   .nav-arrow.left {
-    left: 8px;
+    left: 4px;
   }
 
   .nav-arrow.right {
-    right: 8px;
+    right: 4px;
+  }
+
+  .hidden-columns-section {
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+
+  .hidden-columns-label {
+    font-size: 13px;
+  }
+
+  .hidden-column-btn {
+    padding: 5px 10px;
+    font-size: 11px;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+  .map {
+    padding: 16px 12px;
+  }
+
+  .new-header-section h1 {
+    font-size: 20px;
+  }
+
+  .new-header-section p {
+    font-size: 13px;
+  }
+
+  .filter-group label {
+    font-size: 13px;
+  }
+
+  .filter-group select,
+  .multiselect-trigger {
+    padding: 8px 30px 8px 10px;
+    font-size: 13px;
+  }
+
+  .search-box {
+    padding: 10px 14px 10px 36px;
+    font-size: 14px;
+  }
+
+  .search-icon {
+    width: 16px;
+    height: 16px;
+    left: 10px;
+  }
+
+  .tags-selected-section {
+    gap: 8px;
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .tags-label {
+    font-size: 13px;
+    width: 100%;
+    margin-bottom: 4px;
+  }
+
+  .tag-pill {
+    padding: 5px 10px;
+    font-size: 11px;
+    gap: 6px;
+  }
+
+  .tag-pill button {
+    width: 16px;
+    height: 16px;
+    font-size: 16px;
+  }
+
+  .job-map-table {
+    min-width: 500px;
+  }
+
+  .job-map-table th,
+  .job-map-table td {
+    padding: 6px 8px;
+    min-width: 100px;
+  }
+
+  .job-button {
+    padding: 6px 8px;
+    font-size: 12px;
+  }
+
+  .job-name {
+    font-size: 12px;
+  }
+
+  .job-pay {
+    font-size: 10px;
+  }
+
+  .nav-arrow {
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+  }
+
+  .hover-note {
+    font-size: 12px;
+  }
+
+  .table-container.scrollable::after {
+    font-size: 9px;
+    padding: 2px 8px;
+    bottom: 10px;
+    right: 12px;
+  }
+
+  .multiselect-dropdown {
+    max-width: calc(100vw - 24px);
+  }
+
+  .tag-pill {
+    padding: 5px 10px;
+    font-size: 11px;
+    gap: 6px;
+    white-space: nowrap;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }

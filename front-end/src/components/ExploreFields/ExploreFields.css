@@ -134,19 +134,19 @@
 /* Mobile Responsive */
 @media (max-width: 768px) {
   .explore-fields {
-    padding: 40px 0;
+    padding: 30px 0;
   }
 
   .explore-fields__container {
-    padding: 0 20px;
+    padding: 0 16px;
   }
 
   .explore-fields__title {
-    font-size: 28px;
+    font-size: 24px;
   }
 
   .explore-fields__description {
-    font-size: 16px;
+    font-size: 15px;
   }
 
   .explore-fields__tabs {
@@ -154,8 +154,8 @@
   }
 
   .explore-fields__tab {
-    font-size: 14px;
-    padding: 8px 16px;
+    font-size: 13px;
+    padding: 8px 14px;
   }
 
   .explore-fields__content {
@@ -164,26 +164,87 @@
   }
 
   .explore-fields__image-placeholder {
-    min-height: 250px;
+    min-height: 200px;
   }
 
   .explore-fields__text-content {
-    padding: 30px 20px;
+    padding: 24px 16px;
   }
 
   .explore-fields__field-title {
-    font-size: 26px;
+    font-size: 22px;
   }
 
   .explore-fields__field-description {
-    font-size: 15px;
+    font-size: 14px;
   }
 
   .explore-fields__roles-label {
-    font-size: 15px;
+    font-size: 14px;
   }
 
   .explore-fields__roles-list li {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .explore-fields {
+    padding: 24px 0;
+  }
+
+  .explore-fields__container {
+    padding: 0 12px;
+  }
+
+  .explore-fields__title {
+    font-size: 20px;
+  }
+
+  .explore-fields__description {
     font-size: 14px;
+    margin-bottom: 24px;
+  }
+
+  .explore-fields__tabs {
+    gap: 6px;
+    margin-bottom: 24px;
+  }
+
+  .explore-fields__tab {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+
+  .explore-fields__image-placeholder {
+    min-height: 180px;
+  }
+
+  .explore-fields__text-content {
+    padding: 20px 12px;
+  }
+
+  .explore-fields__field-title {
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+
+  .explore-fields__field-description {
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+
+  .explore-fields__roles-label {
+    font-size: 13px;
+    margin-bottom: 8px;
+  }
+
+  .explore-fields__roles-list {
+    padding-left: 20px;
+  }
+
+  .explore-fields__roles-list li {
+    font-size: 12px;
+    margin-bottom: 6px;
   }
 }
