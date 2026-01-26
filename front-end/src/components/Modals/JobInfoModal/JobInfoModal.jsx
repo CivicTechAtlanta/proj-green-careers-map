@@ -105,36 +105,32 @@ function JobInfoModal({ activeModal, closeModal, jobData }) {
             <h3>Job Description</h3>
             <p>{jobData.description}</p>
           </div>
-          <div className="job-info__section">
-            <div className="job-info__container">
-              <div className="job-info__icon-container">
-                <img
-                  className="job-info__icon"
-                  src={dollarIcon}
-                  alt="compensation icon"
-                />
-                <div className="job-info__experience-container">
-                  <h3>Compensation</h3>
-                  <p>{jobData.payinfo}</p>
-                </div>
-              </div>
-              <div className="job-info__icon-container">
-                <img
-                  className="job-info__icon"
-                  src={trendingUpIcon}
-                  alt="experience level icon"
-                />
-                <div className="job-info__experience-container">
-                  <h3>Experience Level</h3>
-                  <p>{levelMap[jobData.career_level] || jobData.career_level}</p>
-                </div>
+          <div className="job-info__stats-wrapper">
+            <div className="job-info__stat-item">
+              <img
+                className="job-info__icon"
+                src={dollarIcon}
+                alt="compensation icon"
+              />
+              <div className="job-info__stat-content">
+                <h3>Compensation</h3>
+                <p>{jobData.payinfo}</p>
               </div>
             </div>
-          </div>
-          <div className="job-info__section">
-            <div className="job-info__icon-container">
+            <div className="job-info__stat-item">
+              <img
+                className="job-info__icon"
+                src={trendingUpIcon}
+                alt="experience level icon"
+              />
+              <div className="job-info__stat-content">
+                <h3>Experience Level</h3>
+                <p>{levelMap[jobData.career_level] || jobData.career_level}</p>
+              </div>
+            </div>
+            <div className="job-info__stat-item">
               <img className="job-info__icon" src={graduationCapIcon} alt="education icon" />
-              <div className="job-info__experience-container">
+              <div className="job-info__stat-content">
                 <h3>Education Requirements</h3>
                 <p>{jobData.required_education}</p>
               </div>
