@@ -56,6 +56,7 @@ function JobMap({ onJobInfoClick, jobs }) {
   const skillsWrapperRef = useRef(null);
   const [fieldDropdownAlignRight, setFieldDropdownAlignRight] = useState(false);
   const [skillsDropdownAlignRight, setSkillsDropdownAlignRight] = useState(false);
+  const [mobileCurrentCategoryIndex, setMobileCurrentCategoryIndex] = useState(0);
 
   // Filter jobs based on search term, selected fields, and selected skills
   const filteredJobs = Array.isArray(jobs) ? jobs.filter(job => {
@@ -95,10 +96,10 @@ function JobMap({ onJobInfoClick, jobs }) {
 
   // Limit displayed categories based on selected fields (max 5)
   // If fields are selected, only show those fields (up to 5)
-  // If no fields are selected, show all available categories
+  // If no fields are selected, show empty array (triggers "no results" UI)
   const categories = selectedFields.length > 0
     ? selectedFields.filter(field => allFilteredCategories.includes(field)).slice(0, 5)
-    : allFilteredCategories;
+    : [];
 
   // Sort tiers based on current order
   const sortedTiers = sortOrder === 'late-to-entry'
@@ -228,6 +229,13 @@ function JobMap({ onJobInfoClick, jobs }) {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
+  // Reset mobile category index when categories change
+  useEffect(() => {
+    if (mobileCurrentCategoryIndex >= visibleCategories.length) {
+      setMobileCurrentCategoryIndex(Math.max(0, visibleCategories.length - 1));
+    }
+  }, [visibleCategories.length, mobileCurrentCategoryIndex]);
 
   // Calculate dropdown positioning to prevent viewport overflow
   useEffect(() => {
@@ -393,7 +401,7 @@ function JobMap({ onJobInfoClick, jobs }) {
           ))}
         </div>
       )}
-      {filteredJobs.length === 0 ? (
+      {filteredJobs.length === 0 || visibleCategories.length === 0 ? (
         <div className="no-results">
           <p>No jobs match the selected criteria</p>
         </div>
@@ -463,6 +471,73 @@ function JobMap({ onJobInfoClick, jobs }) {
             >
               →
             </button>
+          )}
+        </div>
+
+        {/* Mobile Card View */}
+        <div className="mobile-card-view">
+          {visibleCategories.length > 0 && (
+            <>
+              <div className="mobile-category-nav">
+                <button
+                  className="mobile-nav-btn"
+                  onClick={() => setMobileCurrentCategoryIndex(prev => Math.max(0, prev - 1))}
+                  disabled={mobileCurrentCategoryIndex === 0}
+                  aria-label="Previous category"
+                >
+                  ←
+                </button>
+                <div
+                  className={`mobile-category-title column-${categories.indexOf(visibleCategories[mobileCurrentCategoryIndex]) + 1}`}
+                >
+                  {visibleCategories[mobileCurrentCategoryIndex]}
+                </div>
+                <button
+                  className="mobile-nav-btn"
+                  onClick={() => setMobileCurrentCategoryIndex(prev => Math.min(visibleCategories.length - 1, prev + 1))}
+                  disabled={mobileCurrentCategoryIndex === visibleCategories.length - 1}
+                  aria-label="Next category"
+                >
+                  →
+                </button>
+              </div>
+              <div className="mobile-category-indicator">
+                {mobileCurrentCategoryIndex + 1} of {visibleCategories.length} fields
+              </div>
+
+              {sortedTiers.map((tier) => {
+                const currentCategory = visibleCategories[mobileCurrentCategoryIndex];
+                const cellJobs = getJobsForCell(currentCategory, tier);
+                const columnIndex = categories.indexOf(currentCategory) + 1;
+                const categoryColor = categoryColors[columnIndex];
+
+                return (
+                  <div key={tier} className="mobile-tier-section">
+                    <div className="mobile-tier-header">
+                      {levelMap[tier] || `Level ${tier}`}
+                    </div>
+                    <div className="mobile-jobs-list">
+                      {cellJobs.length > 0 ? (
+                        cellJobs.map((job, jobIndex) => (
+                          <button
+                            key={job.id || jobIndex}
+                            className="mobile-job-card"
+                            style={{ borderColor: categoryColor }}
+                            onClick={() => onJobInfoClick({ ...job, categoryColor })}
+                          >
+                            <div className="mobile-job-name" style={{ color: categoryColor }}>
+                              {job.job_name}
+                            </div>
+                          </button>
+                        ))
+                      ) : (
+                        <div className="mobile-empty-tier">No jobs at this level</div>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </>
           )}
         </div>
         </>
