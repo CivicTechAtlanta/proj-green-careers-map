@@ -95,6 +95,39 @@
   gap: 40px;
 }
 
+/* Stats wrapper - desktop: stacked layout */
+.job-info__stats-wrapper {
+  margin-bottom: 20px;
+}
+
+.job-info__stat-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.job-info__stat-item .job-info__icon {
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+
+.job-info__stat-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.job-info__stat-content h3 {
+  margin: 0 0 8px 0;
+  color: #555;
+  font-size: 1.2rem;
+}
+
+.job-info__stat-content p {
+  margin: 0;
+  line-height: 1.5;
+  color: #666;
+}
+
 .job-info__compensation-container,
 .job-info__education-container,
 .job-info__experience-container {
@@ -178,4 +211,31 @@
   padding: 2px 6px;
   min-width: 24px;
   text-align: center;
+}
+
+/* Mobile styles for job info modal */
+@media (max-width: 768px) {
+  /* Center briefcase icon above title */
+  .job-info__header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+  }
+
+  .job-info__header > svg.job-info__icon {
+    margin: 0 0 15px 0;
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    min-height: 48px;
+    align-self: center;
+  }
+
+  .job-info__header .job-info__title-content {
+    align-items: center;
+    margin: 0 0 20px 0;
+    width: 100%;
+  }
+
 }
