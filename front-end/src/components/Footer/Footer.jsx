@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./Footer.css";
+import prcLogo from "../../assets/images-optimized/logo/prclogo.svg";
 
 function Footer() {
   const [email, setEmail] = useState("");
@@ -14,9 +15,7 @@ function Footer() {
       <div className="footer__container">
         {/* Logo Section */}
         <div className="footer__logo-section">
-          <div className="footer__logo-placeholder">
-            <p className="footer__logo-text">Peoplestown Revitalization Corporation</p>
-          </div>
+          <img src={prcLogo} alt="Peoplestown Revitalization Corporation" className="footer__logo-img" />
         </div>
 
         {/* Contact Section */}

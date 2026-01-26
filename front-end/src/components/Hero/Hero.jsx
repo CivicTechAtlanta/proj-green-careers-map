@@ -1,8 +1,27 @@
 import "./Hero.css";
+import prcLogo from "../../assets/images-optimized/logo/prclogo.svg";
 
-// Import hero image if it exists (Vite resolves this at build time)
-const heroImages = import.meta.glob("../../assets/images/hero/hero-main.{jpg,jpeg,png,webp}", { eager: true });
-const heroImage = Object.values(heroImages)[0]?.default || null;
+// Import optimized hero images (WebP + JPEG fallback at multiple sizes)
+const heroImageModules = import.meta.glob(
+  "../../assets/images-optimized/hero/hero-main-*.{webp,jpg}",
+  { eager: true }
+);
+
+// Build hero image sources for picture element
+const getHeroSources = () => {
+  const sources = { webp: {}, jpg: {} };
+  Object.entries(heroImageModules).forEach(([path, module]) => {
+    const match = path.match(/hero-main-(\d+)w\.(webp|jpg)$/);
+    if (match) {
+      const [, width, format] = match;
+      sources[format][width] = module.default;
+    }
+  });
+  return sources;
+};
+
+const heroSources = getHeroSources();
+const hasHeroImage = Object.keys(heroSources.webp).length > 0;
 
 function Hero() {
   const scrollToCareersMap = () => {
@@ -25,23 +44,7 @@ function Hero() {
         {/* Header Navigation */}
         <div className="hero__nav">
           <div className="hero__logo">
-            <div className="hero__logo-image">
-              {/* Placeholder for skyline logo */}
-              <svg className="hero__logo-placeholder" viewBox="0 0 400 100" xmlns="http://www.w3.org/2000/svg">
-                <rect x="20" y="40" width="30" height="60" fill="#008080"/>
-                <rect x="60" y="25" width="35" height="75" fill="#008080"/>
-                <rect x="105" y="35" width="30" height="65" fill="#008080"/>
-                <circle cx="170" cy="50" r="30" fill="#008080"/>
-                <rect x="155" y="50" width="30" height="50" fill="#008080"/>
-                <rect x="210" y="30" width="40" height="70" fill="#008080"/>
-                <rect x="260" y="45" width="35" height="55" fill="#008080"/>
-                <rect x="305" y="20" width="30" height="80" fill="#008080"/>
-                <rect x="345" y="40" width="35" height="60" fill="#008080"/>
-              </svg>
-            </div>
-            <div className="hero__logo-text">
-              <span className="hero__org-name">Peoplestown Revitalization Corporation</span>
-            </div>
+            <img src={prcLogo} alt="Peoplestown Revitalization Corporation" className="hero__logo-img" />
           </div>
 
           <nav className="hero__nav-buttons">
@@ -56,13 +59,24 @@ function Hero() {
 
         {/* Hero Content */}
         <div className="hero__content">
-          <div className={`hero__image-container ${!heroImage ? 'hero__image-container--placeholder' : ''}`}>
-            {heroImage && (
-              <img
-                src={heroImage}
-                alt="Green careers workers"
-                className="hero__image"
-              />
+          <div className={`hero__image-container ${!hasHeroImage ? 'hero__image-container--placeholder' : ''}`}>
+            {hasHeroImage && (
+              <picture>
+                <source
+                  type="image/webp"
+                  srcSet={`${heroSources.webp['768']} 768w, ${heroSources.webp['1440']} 1440w`}
+                  sizes="(max-width: 768px) 100vw, 1440px"
+                />
+                <img
+                  src={heroSources.jpg['1440']}
+                  srcSet={`${heroSources.jpg['768']} 768w, ${heroSources.jpg['1440']} 1440w`}
+                  sizes="(max-width: 768px) 100vw, 1440px"
+                  alt="Green careers workers"
+                  className="hero__image"
+                  loading="eager"
+                  fetchPriority="high"
+                />
+              </picture>
             )}
             <div className="hero__image-overlay">
               <div className="hero__text-box">

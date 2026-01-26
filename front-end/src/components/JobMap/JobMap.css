@@ -1,5 +1,8 @@
 .map {
   padding: 40px;
+  overflow-x: hidden;
+  max-width: 100vw;
+  box-sizing: border-box;
 }
 
 .new-header-section {
@@ -220,6 +223,8 @@
   padding-bottom: 20px;
   border-bottom: 2px solid #ddd;
   flex-wrap: wrap;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 .tags-label {
@@ -232,26 +237,7 @@
 .selected-tags-list {
   display: flex;
   gap: 8px;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-.selected-tags-list::-webkit-scrollbar {
-  height: 6px;
-}
-
-.selected-tags-list::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.selected-tags-list::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 3px;
-}
-
-.selected-tags-list::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 0, 0, 0.3);
+  flex-wrap: wrap;
 }
 
 .tag-pill {
@@ -884,20 +870,9 @@ tbody tr:last-child .tier-header {
     max-width: calc(100vw - 32px);
   }
 
-  .selected-tags-list {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: 4px;
-  }
-
   .tag-pill {
     padding: 6px 12px;
     font-size: 12px;
-    white-space: nowrap;
-    max-width: 250px;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
 
   .table-container {
@@ -1066,9 +1041,143 @@ tbody tr:last-child .tier-header {
     padding: 5px 10px;
     font-size: 11px;
     gap: 6px;
-    white-space: nowrap;
-    max-width: 200px;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
+
+  /* Hide table layout on small mobile */
+  .navigation-wrapper {
+    display: none;
+  }
+}
+
+/* Mobile Card Layout - default hidden, shown on small screens */
+.mobile-card-view {
+  display: none;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+@media (max-width: 480px) {
+  .mobile-card-view {
+    display: block;
+  }
+}
+
+.mobile-category-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding: 0 10px;
+}
+
+.mobile-nav-btn {
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.mobile-nav-btn:hover {
+  background-color: #555;
+}
+
+.mobile-nav-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.mobile-category-title {
+  font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 12px 16px;
+  border-radius: 8px;
+  min-width: 150px;
+  max-width: 200px;
+}
+
+.mobile-category-indicator {
+  text-align: center;
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 16px;
+}
+
+.mobile-tier-section {
+  margin-bottom: 24px;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.mobile-tier-header {
+  font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: white;
+  padding: 12px 16px;
+  background-color: #333;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.mobile-jobs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.mobile-job-card {
+  padding: 14px 16px;
+  border-radius: 16px;
+  border: 3px solid;
+  background-color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+  overflow: hidden;
+}
+
+.mobile-job-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.mobile-job-name {
+  font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  word-wrap: break-word;
+}
+
+.mobile-empty-tier {
+  font-size: 13px;
+  color: #999;
+  font-style: italic;
+  padding: 8px 12px;
+  text-align: center;
 }
