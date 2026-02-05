@@ -1,9 +1,248 @@
+/* Footer Container */
 .footer {
-  background: lightcoral;
+  background-color: #008080; /* Teal/turquoise background */
+  color: white;
+  width: 100%;
+  margin: 0;
+  padding: 40px 20px;
+  box-sizing: border-box;
 }
 
-.footer__copyright {
-  margin: 0;
-  padding: 20px;
-  text-align: center;
+.footer__container {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 40px;
+}
+
+/* Logo Section */
+.footer__logo-section {
+  flex: 0 0 25%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.footer__logo-img {
+  width: 100%;
+  max-width: 250px;
+  height: auto;
+  filter: brightness(0) invert(1);
+}
+
+/* Contact Section */
+.footer__contact-section {
+  flex: 0 0 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.footer__heading {
+  font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0 0 20px 0;
+  color: white;
+}
+
+.footer__contact-info {
+  font-style: normal;
+  font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.6;
+}
+
+.footer__org-name {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 15px 0;
+  color: white;
+}
+
+.footer__address,
+.footer__email,
+.footer__phone {
+  font-size: 16px;
+  margin: 8px 0;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer__icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  color: white;
+}
+
+.footer__link {
+  color: white;
+  text-decoration: underline;
+  transition: opacity 0.2s ease;
+}
+
+.footer__link:hover {
+  opacity: 0.8;
+}
+
+/* Social Media Icons */
+.footer__social-icons {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.footer__social-btn {
+  width: 40px;
+  height: 40px;
+  background-color: transparent;
+  border: 2px solid white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 8px;
+}
+
+.footer__social-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: scale(1.05);
+}
+
+.footer__social-icon {
+  width: 20px;
+  height: 20px;
+  color: white;
+}
+
+/* Mailing List Section */
+.footer__mailing-section {
+  flex: 0 0 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.footer__mailing-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer__email-input {
+  width: 100%;
+  padding: 12px 16px;
+  font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #333;
+  box-sizing: border-box;
+  transition: background-color 0.2s ease;
+}
+
+.footer__email-input:focus {
+  outline: none;
+  background-color: white;
+}
+
+.footer__email-input::placeholder {
+  color: #999;
+}
+
+.footer__submit-btn {
+  padding: 12px 24px;
+  font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  align-self: flex-start;
+}
+
+.footer__submit-btn:hover {
+  background-color: #555;
+}
+
+.footer__submit-btn:active {
+  transform: scale(0.98);
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  .footer {
+    padding: 30px 20px 80px 20px;
+  }
+
+  .footer__container {
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .footer__logo-section,
+  .footer__contact-section,
+  .footer__mailing-section {
+    flex: 1 1 100%;
+    width: 100%;
+    max-width: 500px;
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer__logo-img {
+    max-width: 200px;
+  }
+
+  .footer__heading {
+    font-size: 20px;
+    text-align: center;
+  }
+
+  .footer__contact-info {
+    text-align: center;
+  }
+
+  .footer__address,
+  .footer__email,
+  .footer__phone {
+    justify-content: center;
+    font-size: 14px;
+  }
+
+  .footer__org-name {
+    font-size: 16px;
+    text-align: center;
+  }
+
+  .footer__social-icons {
+    justify-content: center;
+  }
+
+  .footer__mailing-form {
+    align-items: center;
+  }
+
+  .footer__email-input {
+    font-size: 14px;
+    padding: 10px 14px;
+  }
+
+  .footer__submit-btn {
+    font-size: 14px;
+    padding: 10px 20px;
+    align-self: center;
+  }
 }

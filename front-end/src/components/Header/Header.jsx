@@ -3,7 +3,9 @@ import "./Header.css";
 function Header() {
   return (
     <header className="header">
-      <h1 className="header__title">Green Careers Map</h1>
+      <div className="header__container">
+        <h1 className="header__title">Green Careers Map</h1>
+      </div>
     </header>
   );
 }
