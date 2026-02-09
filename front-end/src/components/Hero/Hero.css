@@ -28,6 +28,39 @@
   width: auto;
 }
 
+/* Hamburger Menu Button (hidden on desktop) */
+.hero__hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+}
+
+.hero__hamburger-line {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background-color: #333;
+  border-radius: 2px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.hero__hamburger--open .hero__hamburger-line:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.hero__hamburger--open .hero__hamburger-line:nth-child(2) {
+  opacity: 0;
+}
+
+.hero__hamburger--open .hero__hamburger-line:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
 .hero__nav-buttons {
   display: flex;
   gap: 15px;
@@ -163,27 +196,38 @@
 /* Mobile Responsive */
 @media (max-width: 768px) {
   .hero__nav {
-    flex-direction: column;
-    gap: 20px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
     padding: 16px;
-    align-items: flex-start;
   }
 
   .hero__logo {
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     gap: 10px;
-    width: 100%;
+    width: auto;
   }
 
   .hero__logo-img {
     height: 45px;
   }
 
+  .hero__hamburger {
+    display: flex;
+  }
+
   .hero__nav-buttons {
+    display: none;
     width: 100%;
     flex-direction: column;
     gap: 10px;
+  }
+
+  .hero__nav-buttons--open {
+    display: flex;
+    margin-top: 12px;
   }
 
   .hero__nav-btn {
@@ -196,20 +240,36 @@
     min-height: auto;
     padding: 0 16px;
     margin-bottom: 0;
+    overflow: visible;
   }
 
   .hero__image-container {
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
+    align-items: stretch;
+    height: auto;
+    overflow: visible;
+    border-radius: 0;
+  }
+
+  .hero__image {
+    position: relative;
+    height: 250px;
+    border-radius: 12px;
+    margin-bottom: 12px;
   }
 
   .hero__image-overlay {
-    margin-left: 0;
-    padding: 20px 16px;
+    position: relative;
+    margin: 0 -16px;
+    padding: 0;
+    max-width: none;
   }
 
   .hero__text-box {
     padding: 24px 16px;
+    border-radius: 0;
+    box-shadow: none;
+    background-color: #f5f5f5;
   }
 
   .hero__title {
@@ -245,20 +305,18 @@
     margin-bottom: 0;
   }
 
-  .hero__image-container {
-    border-radius: 12px;
-  }
-
   .hero__image {
+    height: 200px;
     border-radius: 12px;
   }
 
   .hero__image-overlay {
-    padding: 16px 12px;
+    margin: 0 -12px;
   }
 
   .hero__text-box {
     padding: 20px 14px;
+    border-radius: 0;
   }
 
   .hero__title {
@@ -279,5 +337,92 @@
 
   .hero__section-description {
     font-size: 14px;
+  }
+}
+
+/* Tablets and smaller desktops */
+@media (min-width: 769px) and (max-width: 1180px) {
+  .hero__content {
+    height: 350px;
+  }
+
+  .hero__image-overlay {
+    max-width: 45%;
+    margin-left: 30px;
+  }
+
+  .hero__text-box {
+    padding: 24px;
+  }
+
+  .hero__title {
+    font-size: 32px;
+    margin-bottom: 14px;
+  }
+}
+
+/* Landscape tablets */
+@media (max-height: 700px) and (min-width: 769px) and (max-width: 1180px) {
+  .hero__image-overlay {
+    max-width: 45%;
+    margin-left: 30px;
+  }
+
+  .hero__text-box {
+    padding: 24px;
+  }
+
+  .hero__title {
+    font-size: 32px;
+    margin-bottom: 14px;
+  }
+}
+
+/* Landscape phones (including Android) - use mobile stacked layout */
+@media (max-height: 450px) {
+  .hero__content {
+    height: auto;
+    padding: 0 16px;
+    margin-bottom: 0;
+    overflow: visible;
+  }
+
+  .hero__image-container {
+    flex-direction: column;
+    align-items: stretch;
+    height: auto;
+    overflow: visible;
+    border-radius: 0;
+  }
+
+  .hero__image {
+    position: relative;
+    height: 50vh;
+    min-height: 200px;
+    border-radius: 12px;
+  }
+
+  .hero__image-overlay {
+    position: relative;
+    margin: 0 -16px;
+    padding: 0;
+    max-width: none;
+  }
+
+  .hero__text-box {
+    padding: 16px;
+    border-radius: 0;
+    box-shadow: none;
+    background-color: #f5f5f5;
+  }
+
+  .hero__title {
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+
+  .hero__description {
+    font-size: 14px;
+    line-height: 1.4;
   }
 }

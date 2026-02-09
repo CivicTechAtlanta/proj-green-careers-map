@@ -50,13 +50,19 @@ function JobMap({ onJobInfoClick, jobs }) {
   const [isSkillsDropdownOpen, setIsSkillsDropdownOpen] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
   const tableContainerRef = useRef(null);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(false);
   const fieldWrapperRef = useRef(null);
   const skillsWrapperRef = useRef(null);
+  const mobileCardViewRef = useRef(null);
+  const touchStartX = useRef(0);
+  const touchEndX = useRef(0);
   const [fieldDropdownAlignRight, setFieldDropdownAlignRight] = useState(false);
   const [skillsDropdownAlignRight, setSkillsDropdownAlignRight] = useState(false);
   const [mobileCurrentCategoryIndex, setMobileCurrentCategoryIndex] = useState(0);
+  const [desktopStartIndex, setDesktopStartIndex] = useState(0);
+  const columnsPerPage = 2;
+  // Original scroll-based navigation state (kept for reference)
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
 
   // Filter jobs based on search term, selected fields, and selected skills
   const filteredJobs = Array.isArray(jobs) ? jobs.filter(job => {
@@ -109,7 +115,7 @@ function JobMap({ onJobInfoClick, jobs }) {
   // Function to get jobs for a specific category and tier
   const getJobsForCell = (category, tier) => {
     if (!Array.isArray(filteredJobs)) return [];
-    return filteredJobs.filter(job => 
+    return filteredJobs.filter(job =>
       job.category === category && job.career_level === tier
     );
   };
@@ -158,6 +164,7 @@ function JobMap({ onJobInfoClick, jobs }) {
     setSearchTerm('');
   };
 
+  // Original scroll-based navigation functions (kept for reference)
   // Update scroll button visibility
   const updateScrollButtons = () => {
     const container = tableContainerRef.current;
@@ -195,16 +202,28 @@ function JobMap({ onJobInfoClick, jobs }) {
   // Filter visible categories
   const visibleCategories = categories.filter(cat => !hiddenColumns.includes(cat));
 
+  // Calculate max jobs per tier across all categories for consistent row heights
+  const maxJobsPerTier = {};
+  tiers.forEach(tier => {
+    let maxJobs = 0;
+    visibleCategories.forEach(category => {
+      const jobCount = getJobsForCell(category, tier).length;
+      if (jobCount > maxJobs) maxJobs = jobCount;
+    });
+    maxJobsPerTier[tier] = maxJobs;
+  });
+
+  // Original scroll position check (kept for reference)
   // Check scroll position on mount and resize
-  useEffect(() => {
-    const container = tableContainerRef.current;
-    if (container) {
-      updateScrollButtons();
-      const handleResize = () => updateScrollButtons();
-      window.addEventListener('resize', handleResize);
-      return () => window.removeEventListener('resize', handleResize);
-    }
-  }, [visibleCategories, filteredJobs]);
+  // useEffect(() => {
+  //   const container = tableContainerRef.current;
+  //   if (container) {
+  //     updateScrollButtons();
+  //     const handleResize = () => updateScrollButtons();
+  //     window.addEventListener('resize', handleResize);
+  //     return () => window.removeEventListener('resize', handleResize);
+  //   }
+  // }, [visibleCategories, filteredJobs]);
 
   // Initialize with first 5 fields when jobs load
   useEffect(() => {
@@ -236,6 +255,104 @@ function JobMap({ onJobInfoClick, jobs }) {
       setMobileCurrentCategoryIndex(Math.max(0, visibleCategories.length - 1));
     }
   }, [visibleCategories.length, mobileCurrentCategoryIndex]);
+
+  // Reset desktop start index when categories change
+  useEffect(() => {
+    if (desktopStartIndex >= visibleCategories.length) {
+      setDesktopStartIndex(Math.max(0, visibleCategories.length - columnsPerPage));
+    }
+  }, [visibleCategories.length, desktopStartIndex]);
+
+  // Get visible columns for desktop pagination
+  const desktopVisibleCategories = visibleCategories.slice(
+    desktopStartIndex,
+    desktopStartIndex + columnsPerPage
+  );
+
+  // Desktop navigation handlers
+  const canGoLeft = desktopStartIndex > 0;
+  const canGoRight = desktopStartIndex + columnsPerPage < visibleCategories.length;
+
+  const goToPrevColumns = () => {
+    setDesktopStartIndex(prev => Math.max(0, prev - 1));
+  };
+
+  const goToNextColumns = () => {
+    setDesktopStartIndex(prev =>
+      Math.min(visibleCategories.length - columnsPerPage, prev + 1)
+    );
+  };
+
+  // Mobile swipe handlers (for mobile card view)
+  const handleMobileTouchStart = (e) => {
+    // Ignore touches on buttons
+    if (e.target.closest('button')) {
+      touchStartX.current = null;
+      return;
+    }
+    touchStartX.current = e.touches[0].clientX;
+    touchEndX.current = e.touches[0].clientX;
+  };
+
+  const handleMobileTouchMove = (e) => {
+    if (touchStartX.current === null) return;
+    touchEndX.current = e.touches[0].clientX;
+  };
+
+  const handleMobileTouchEnd = () => {
+    if (touchStartX.current === null) return;
+
+    const swipeThreshold = 50;
+    const diff = touchStartX.current - touchEndX.current;
+
+    if (Math.abs(diff) > swipeThreshold) {
+      if (diff > 0 && mobileCurrentCategoryIndex < visibleCategories.length - 1) {
+        // Swiped left - go to next category
+        setMobileCurrentCategoryIndex(prev => prev + 1);
+      } else if (diff < 0 && mobileCurrentCategoryIndex > 0) {
+        // Swiped right - go to previous category
+        setMobileCurrentCategoryIndex(prev => prev - 1);
+      }
+    }
+
+    touchStartX.current = null;
+    touchEndX.current = null;
+  };
+
+  // Desktop/Tablet swipe handlers (for table view)
+  const handleDesktopTouchStart = (e) => {
+    if (e.target.closest('button')) {
+      touchStartX.current = null;
+      return;
+    }
+    touchStartX.current = e.touches[0].clientX;
+    touchEndX.current = e.touches[0].clientX;
+  };
+
+  const handleDesktopTouchMove = (e) => {
+    if (touchStartX.current === null) return;
+    touchEndX.current = e.touches[0].clientX;
+  };
+
+  const handleDesktopTouchEnd = () => {
+    if (touchStartX.current === null) return;
+
+    const swipeThreshold = 50;
+    const diff = touchStartX.current - touchEndX.current;
+
+    if (Math.abs(diff) > swipeThreshold) {
+      if (diff > 0 && canGoRight) {
+        // Swiped left - go to next columns
+        goToNextColumns();
+      } else if (diff < 0 && canGoLeft) {
+        // Swiped right - go to previous columns
+        goToPrevColumns();
+      }
+    }
+
+    touchStartX.current = null;
+    touchEndX.current = null;
+  };
 
   // Calculate dropdown positioning to prevent viewport overflow
   useEffect(() => {
@@ -407,27 +524,33 @@ function JobMap({ onJobInfoClick, jobs }) {
         </div>
       ) : (
         <>
-          <div className="navigation-wrapper">
-            {canScrollLeft && (
-              <button
-                className="nav-arrow left"
-                onClick={scrollLeft}
-                aria-label="Scroll left"
-              >
-                ←
-              </button>
-            )}
+          <div
+            className="navigation-wrapper"
+            onTouchStart={handleDesktopTouchStart}
+            onTouchMove={handleDesktopTouchMove}
+            onTouchEnd={handleDesktopTouchEnd}
+          >
+            <button
+              className={`nav-arrow left ${!canGoLeft ? 'nav-arrow--disabled' : ''}`}
+              onClick={goToPrevColumns}
+              disabled={!canGoLeft}
+              aria-label="Previous columns"
+            >
+              ←
+            </button>
 
             <div
               ref={tableContainerRef}
-              className={`table-container ${visibleCategories.length > 5 ? 'scrollable' : ''}`}
-              onScroll={updateScrollButtons}
+              className="table-container"
             >
+              <div className="column-indicator">
+                {desktopStartIndex + 1}-{Math.min(desktopStartIndex + columnsPerPage, visibleCategories.length)} of {visibleCategories.length} fields
+              </div>
               <table className="job-map-table">
                 <thead>
                   <tr>
                     <th></th>
-                    {visibleCategories.map((category, index) => (
+                    {desktopVisibleCategories.map((category, index) => (
                     <th key={index} className={`category-header column-${categories.indexOf(category) + 1}`}>
                       <span>{category}</span>
                     </th>
@@ -435,47 +558,61 @@ function JobMap({ onJobInfoClick, jobs }) {
                 </tr>
               </thead>
         <tbody>
-          {sortedTiers.map((tier, rowIndex) => (
-            <tr key={rowIndex}>
-              <td className="tier-header">{levelMap[tier] || `Level ${tier}`}</td>
-              {visibleCategories.map((category, colIndex) => {
-                const cellJobs = getJobsForCell(category, tier);
-                const columnIndex = categories.indexOf(category) + 1;
-                const categoryColor = categoryColors[columnIndex];
-                return (
-                  <td key={colIndex} className={`job-cell column-${columnIndex}`}>
-                    {cellJobs.map((job, jobIndex) => (
-                      <div key={job.id || jobIndex} className="job-button-container">
-                        <button
-                          className="job-button"
-                          onClick={() => onJobInfoClick({ ...job, categoryColor })}
-                        >
-                          <div className="job-name">{job.job_name}</div>
-                        </button>
+          {sortedTiers.map((tier, rowIndex) => {
+            // Calculate height based on max jobs in this tier (approx 52px per job button)
+            const cellHeight = maxJobsPerTier[tier] ? maxJobsPerTier[tier] * 52 + 16 : 60;
+            return (
+              <tr key={rowIndex}>
+                <td className="tier-header">{levelMap[tier] || `Level ${tier}`}</td>
+                {desktopVisibleCategories.map((category, colIndex) => {
+                  const cellJobs = getJobsForCell(category, tier);
+                  const columnIndex = categories.indexOf(category) + 1;
+                  const categoryColor = categoryColors[columnIndex];
+                  return (
+                    <td
+                      key={colIndex}
+                      className={`job-cell column-${columnIndex}`}
+                    >
+                      <div className="job-cell-content" style={{ minHeight: `${cellHeight}px` }}>
+                        {cellJobs.map((job, jobIndex) => (
+                          <div key={job.id || jobIndex} className="job-button-container">
+                            <button
+                              className="job-button"
+                              onClick={() => onJobInfoClick({ ...job, categoryColor })}
+                            >
+                              <div className="job-name">{job.job_name}</div>
+                            </button>
+                          </div>
+                        ))}
                       </div>
-                    ))}
-                  </td>
-                );
-              })}
-            </tr>
-          ))}
+                    </td>
+                  );
+                })}
+              </tr>
+            );
+          })}
               </tbody>
             </table>
           </div>
 
-          {canScrollRight && (
             <button
-              className="nav-arrow right"
-              onClick={scrollRight}
-              aria-label="Scroll right"
+              className={`nav-arrow right ${!canGoRight ? 'nav-arrow--disabled' : ''}`}
+              onClick={goToNextColumns}
+              disabled={!canGoRight}
+              aria-label="Next columns"
             >
               →
             </button>
-          )}
         </div>
 
         {/* Mobile Card View */}
-        <div className="mobile-card-view">
+        <div
+          className="mobile-card-view"
+          ref={mobileCardViewRef}
+          onTouchStart={handleMobileTouchStart}
+          onTouchMove={handleMobileTouchMove}
+          onTouchEnd={handleMobileTouchEnd}
+        >
           {visibleCategories.length > 0 && (
             <>
               <div className="mobile-category-nav">
