@@ -93,7 +93,7 @@
 
 /* Acknowledgment Box */
 .home__acknowledgment {
-  width: 100%;
+  width: calc(100% - 40px);
   max-width: 1200px;
   margin: 40px auto;
   padding: 30px 40px;
