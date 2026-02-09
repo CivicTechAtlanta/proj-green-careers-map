@@ -67,6 +67,21 @@ function Home({ onJobInfoClick }) {
       ) : (
         <JobMap onJobInfoClick={onJobInfoClick} jobs={jobs} />
       )}
+
+      {/* Acknowledgment Box */}
+      <div className="home__acknowledgment">
+        <p className="home__acknowledgment-text">
+          A huge THANK YOU to the City of Atlanta Mayor's Office for their support of this initiative, including youth career workshop facilitation and data sharing from the Atlanta Clean Energy Career Map. For additional information on clean energy careers, you can access the Career Map here:{" "}
+          <a
+            href="https://atlbuildings.careerpathplatform.com/map/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="home__acknowledgment-link"
+          >
+            atlbuildings.careerpathplatform.com/map
+          </a>
+        </p>
+      </div>
     </section>
   );
 }
