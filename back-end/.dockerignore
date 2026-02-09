@@ -1,0 +1,36 @@
+# Exclude local development files
+docker-compose.yml
+*.db
+*.sqlite
+*.sqlite3
+
+# Python files
+__pycache__/
+*.py[cod]
+*.pyc
+.Python
+*.so
+.venv/
+venv/
+env/
+
+# CSV data files (if not needed in container)
+*.csv
+
+# Git
+.git/
+.gitignore
+
+# Documentation
+README.md
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
