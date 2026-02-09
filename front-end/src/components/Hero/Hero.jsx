@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "./Hero.css";
 import prcLogo from "../../assets/images-optimized/logo/prclogo.svg";
 
@@ -24,7 +25,10 @@ const heroSources = getHeroSources();
 const hasHeroImage = Object.keys(heroSources.webp).length > 0;
 
 function Hero() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   const scrollToCareersMap = () => {
+    setMenuOpen(false);
     const mapElement = document.querySelector('.map');
     if (mapElement) {
       mapElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -32,6 +36,7 @@ function Hero() {
   };
 
   const scrollToContact = () => {
+    setMenuOpen(false);
     const footerElement = document.querySelector('.footer');
     if (footerElement) {
       footerElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -47,7 +52,18 @@ function Hero() {
             <img src={prcLogo} alt="Peoplestown Revitalization Corporation" className="hero__logo-img" />
           </div>
 
-          <nav className="hero__nav-buttons">
+          <button
+            className={`hero__hamburger ${menuOpen ? 'hero__hamburger--open' : ''}`}
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle navigation menu"
+            aria-expanded={menuOpen}
+          >
+            <span className="hero__hamburger-line" />
+            <span className="hero__hamburger-line" />
+            <span className="hero__hamburger-line" />
+          </button>
+
+          <nav className={`hero__nav-buttons ${menuOpen ? 'hero__nav-buttons--open' : ''}`}>
             <button className="hero__nav-btn hero__nav-btn--active" onClick={scrollToCareersMap}>
               Careers Map
             </button>
