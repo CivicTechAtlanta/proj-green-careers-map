@@ -90,3 +90,46 @@
 .error-retry:active {
   transform: translateY(0);
 }
+
+/* Acknowledgment Box */
+.home__acknowledgment {
+  width: calc(100% - 40px);
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 30px 40px;
+  background-color: #f0f8f7;
+  border: 2px solid #008080;
+  border-radius: 12px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.home__acknowledgment-text {
+  font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #333;
+  margin: 0;
+}
+
+.home__acknowledgment-link {
+  color: #008080;
+  font-weight: 600;
+  text-decoration: underline;
+  transition: color 0.2s ease;
+}
+
+.home__acknowledgment-link:hover {
+  color: #006666;
+}
+
+@media (max-width: 768px) {
+  .home__acknowledgment {
+    margin: 30px 20px;
+    padding: 20px 24px;
+  }
+
+  .home__acknowledgment-text {
+    font-size: 14px;
+  }
+}

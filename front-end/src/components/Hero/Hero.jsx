@@ -1,10 +1,10 @@
 import { useState } from "react";
 import "./Hero.css";
-import prcLogo from "../../assets/images-optimized/logo/prclogo.svg";
+import prcLogo from "../../assets/images-optimized-v2/logo/prclogo.svg";
 
 // Import optimized hero images (WebP + JPEG fallback at multiple sizes)
 const heroImageModules = import.meta.glob(
-  "../../assets/images-optimized/hero/hero-main-*.{webp,jpg}",
+  "../../assets/images-optimized-v2/hero/hero-main-*.{webp,jpg}",
   { eager: true }
 );
 
