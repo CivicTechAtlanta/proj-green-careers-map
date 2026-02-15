@@ -195,20 +195,38 @@ function ExploreFields() {
           ))}
         </div>
 
-        {/* Mobile Navigation */}
-        <div className="explore-fields__mobile-nav">
+        {/* Mobile Navigation Wrapper - arrows on sides of content */}
+        <div className="explore-fields__mobile-wrapper">
           <button
-            className="explore-fields__nav-btn"
+            className="explore-fields__nav-btn explore-fields__nav-btn--left"
             onClick={goToPrevField}
             aria-label="Previous field"
           >
             ‹
           </button>
-          <span className="explore-fields__mobile-indicator">
-            {activeIndex + 1} of {fields.length}
-          </span>
+
+          <div className="explore-fields__content explore-fields__content--mobile">
+            <div className={`explore-fields__image-container ${!fieldImages[fieldImageKeys[activeField.imageKey]] ? 'explore-fields__image-container--placeholder' : ''}`}>
+              <FieldImage fieldKey={activeField.imageKey} alt={activeField.title} />
+            </div>
+
+            <div className="explore-fields__text-content">
+              <h3 className="explore-fields__field-title">{activeField.title}</h3>
+              <p className="explore-fields__field-description">{activeField.description}</p>
+
+              <div className="explore-fields__roles">
+                <p className="explore-fields__roles-label">Entry-level roles might include:</p>
+                <ul className="explore-fields__roles-list">
+                  {activeField.roles.map((role, index) => (
+                    <li key={index}>{role}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+
           <button
-            className="explore-fields__nav-btn"
+            className="explore-fields__nav-btn explore-fields__nav-btn--right"
             onClick={goToNextField}
             aria-label="Next field"
           >
@@ -216,8 +234,15 @@ function ExploreFields() {
           </button>
         </div>
 
-        {/* Content */}
-        <div className="explore-fields__content">
+        {/* Mobile Indicator */}
+        <div className="explore-fields__mobile-indicator-wrapper">
+          <span className="explore-fields__mobile-indicator">
+            {activeIndex + 1} of {fields.length}
+          </span>
+        </div>
+
+        {/* Desktop Content */}
+        <div className="explore-fields__content explore-fields__content--desktop">
           <div className={`explore-fields__image-container ${!fieldImages[fieldImageKeys[activeField.imageKey]] ? 'explore-fields__image-container--placeholder' : ''}`}>
             <FieldImage fieldKey={activeField.imageKey} alt={activeField.title} />
           </div>

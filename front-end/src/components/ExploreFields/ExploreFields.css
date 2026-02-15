@@ -139,7 +139,15 @@
 }
 
 /* Mobile Navigation - Hidden by default on desktop */
-.explore-fields__mobile-nav {
+.explore-fields__mobile-wrapper {
+  display: none;
+}
+
+.explore-fields__mobile-indicator-wrapper {
+  display: none;
+}
+
+.explore-fields__content--mobile {
   display: none;
 }
 
@@ -161,17 +169,29 @@
     font-size: 15px;
   }
 
-  /* Hide tabs on mobile, show carousel nav instead */
+  /* Hide tabs and desktop content on mobile, show carousel nav instead */
   .explore-fields__tabs {
     display: none;
   }
 
-  .explore-fields__mobile-nav {
+  .explore-fields__content--desktop {
+    display: none;
+  }
+
+  .explore-fields__mobile-wrapper {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 20px;
-    margin-bottom: 24px;
+    gap: 12px;
+    position: relative;
+  }
+
+  .explore-fields__content--mobile {
+    display: block;
+    flex: 1;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background-color: white;
   }
 
   .explore-fields__nav-btn {
@@ -181,6 +201,7 @@
     border-radius: 8px;
     width: 48px;
     height: 48px;
+    min-width: 48px;
     font-size: 28px;
     font-weight: bold;
     cursor: pointer;
@@ -198,6 +219,12 @@
 
   .explore-fields__nav-btn:active {
     transform: scale(0.95);
+  }
+
+  .explore-fields__mobile-indicator-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 16px;
   }
 
   .explore-fields__mobile-indicator {
@@ -254,14 +281,9 @@
     margin-bottom: 24px;
   }
 
-  .explore-fields__mobile-nav {
-    gap: 16px;
-    margin-bottom: 20px;
-  }
-
   .explore-fields__nav-btn {
-    width: 44px;
-    height: 44px;
+    width: 40px;
+    min-width: 40px;
     font-size: 24px;
   }
 
