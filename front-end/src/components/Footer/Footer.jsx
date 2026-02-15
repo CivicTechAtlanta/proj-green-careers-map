@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./Footer.css";
-import prcLogo from "../../assets/images-optimized/logo/prclogo.svg";
+import prcLogo from "../../assets/images/logo/PRC Logo Horizontal.svg";
 
 function Footer() {
   const [email, setEmail] = useState("");
