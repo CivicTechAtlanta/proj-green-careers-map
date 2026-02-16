@@ -49,6 +49,13 @@ function JobMap({ onJobInfoClick, jobs }) {
   const [isFieldDropdownOpen, setIsFieldDropdownOpen] = useState(false);
   const [isSkillsDropdownOpen, setIsSkillsDropdownOpen] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
+  // Mobile filter panel state
+  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
+  const [expandedMobileSections, setExpandedMobileSections] = useState({
+    experience: false,
+    fields: false,
+    skills: false
+  });
   const tableContainerRef = useRef(null);
   const fieldWrapperRef = useRef(null);
   const skillsWrapperRef = useRef(null);
@@ -383,7 +390,149 @@ function JobMap({ onJobInfoClick, jobs }) {
         <p>Use the map below to see the available careers in each field or use the filters to find one tailored to your skills.</p>
       </div>
 
-      <div className="filters-row">
+      {/* Mobile Filter Panel - Only visible on mobile */}
+      <div className="mobile-filter-panel">
+        <button
+          className={`mobile-filter-trigger ${isMobileFilterOpen ? 'mobile-filter-trigger--open' : ''}`}
+          onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}
+        >
+          <span>Filter</span>
+          <svg className="mobile-filter-arrow" viewBox="0 0 12 12">
+            <path fill="currentColor" d="M6 9L1 4h10z"/>
+          </svg>
+        </button>
+
+        {isMobileFilterOpen && (
+          <div className="mobile-filter-dropdown">
+            {/* Experience Level Section */}
+            <div className="mobile-filter-section">
+              <button
+                className={`mobile-filter-section-header ${expandedMobileSections.experience ? 'mobile-filter-section-header--expanded' : ''}`}
+                onClick={() => setExpandedMobileSections(prev => ({ ...prev, experience: !prev.experience }))}
+              >
+                <span>Experience Level</span>
+                <svg className="mobile-section-arrow" viewBox="0 0 12 12">
+                  <path fill="currentColor" d="M6 9L1 4h10z"/>
+                </svg>
+              </button>
+              {expandedMobileSections.experience && (
+                <div className="mobile-filter-options">
+                  <label className="mobile-filter-option">
+                    <input
+                      type="radio"
+                      name="sortOrder"
+                      checked={sortOrder === 'entry-to-late'}
+                      onChange={() => setSortOrder('entry-to-late')}
+                    />
+                    <span>Entry to Late-Career</span>
+                  </label>
+                  <label className="mobile-filter-option">
+                    <input
+                      type="radio"
+                      name="sortOrder"
+                      checked={sortOrder === 'late-to-entry'}
+                      onChange={() => setSortOrder('late-to-entry')}
+                    />
+                    <span>Late-Career to Entry</span>
+                  </label>
+                </div>
+              )}
+            </div>
+
+            {/* Fields Section */}
+            <div className="mobile-filter-section">
+              <button
+                className={`mobile-filter-section-header ${expandedMobileSections.fields ? 'mobile-filter-section-header--expanded' : ''}`}
+                onClick={() => setExpandedMobileSections(prev => ({ ...prev, fields: !prev.fields }))}
+              >
+                <span>Fields {selectedFields.length > 0 && <span className="mobile-filter-count">{selectedFields.length}</span>}</span>
+                <svg className="mobile-section-arrow" viewBox="0 0 12 12">
+                  <path fill="currentColor" d="M6 9L1 4h10z"/>
+                </svg>
+              </button>
+              {expandedMobileSections.fields && (
+                <div className="mobile-filter-options">
+                  {selectedFields.length >= 5 && (
+                    <div className="mobile-filter-warning">
+                      Maximum 5 fields. Uncheck one to select another.
+                    </div>
+                  )}
+                  {allCategories.map(cat => {
+                    const isChecked = selectedFields.includes(cat);
+                    const isDisabled = !isChecked && selectedFields.length >= 5;
+                    return (
+                      <label
+                        key={cat}
+                        className={`mobile-filter-option ${isDisabled ? 'mobile-filter-option--disabled' : ''}`}
+                      >
+                        <input
+                          type="checkbox"
+                          checked={isChecked}
+                          disabled={isDisabled}
+                          onChange={() => handleFieldToggle(cat)}
+                        />
+                        <span>{cat}</span>
+                      </label>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+
+            {/* Skills Section */}
+            <div className="mobile-filter-section">
+              <button
+                className={`mobile-filter-section-header ${expandedMobileSections.skills ? 'mobile-filter-section-header--expanded' : ''}`}
+                onClick={() => setExpandedMobileSections(prev => ({ ...prev, skills: !prev.skills }))}
+              >
+                <span>Skills {selectedSkills.length > 0 && <span className="mobile-filter-count">{selectedSkills.length}</span>}</span>
+                <svg className="mobile-section-arrow" viewBox="0 0 12 12">
+                  <path fill="currentColor" d="M6 9L1 4h10z"/>
+                </svg>
+              </button>
+              {expandedMobileSections.skills && (
+                <div className="mobile-filter-options">
+                  {allTags.map(tag => (
+                    <label key={tag} className="mobile-filter-option">
+                      <input
+                        type="checkbox"
+                        checked={selectedSkills.includes(tag)}
+                        onChange={() => handleSkillToggle(tag)}
+                      />
+                      <span>{tag}</span>
+                    </label>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Search within mobile filter */}
+            <div className="mobile-filter-search">
+              <div className="search-input-wrapper">
+                <svg className="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <path d="m21 21-4.35-4.35"></path>
+                </svg>
+                <input
+                  type="text"
+                  placeholder="Search jobs..."
+                  className="search-box"
+                  value={searchTerm}
+                  onChange={handleSearchChange}
+                />
+              </div>
+            </div>
+
+            {/* Clear all button */}
+            <button className="mobile-filter-clear" onClick={clearAllFilters}>
+              Clear All Filters
+            </button>
+          </div>
+        )}
+      </div>
+
+      {/* Desktop Filters Row - Hidden on mobile */}
+      <div className="filters-row filters-row--desktop">
         <div className="filter-group">
           <label>Sort by Experience Level</label>
           <select value={sortOrder} onChange={(e) => setSortOrder(e.target.value)}>
