@@ -3,7 +3,7 @@ import "./ExploreFields.css";
 
 // Import all optimized field images (WebP + JPEG at multiple sizes)
 const fieldImageModules = import.meta.glob(
-  "../../assets/images-optimized/fields/*.{webp,jpg}",
+  "../../assets/images-optimized-v2/fields/*.{webp,jpg}",
   { eager: true }
 );
 
@@ -30,6 +30,7 @@ const fieldImageKeys = {
   education: "education",
   energyEfficiency: "energy-efficiency",
   greenInfrastructure: "green-infrastructure",
+  naturalResources: "natural-resources",
   remediation: "remediation",
   renewableEnergy: "renewable-energy",
   transportation: "transportation",
@@ -76,7 +77,7 @@ function ExploreFields() {
       imageKey: "agriculture"
     },
     {
-      name: "Building",
+      name: "Building Construct",
       title: "Building Careers",
       description: "Building professionals construct and maintain the physical spaces where we live, work, and gather. They combine craftsmanship with innovation to create safe, efficient, and sustainable structures that serve our communities for generations.",
       roles: [
@@ -118,6 +119,17 @@ function ExploreFields() {
         "Green Infrastructure Inspector"
       ],
       imageKey: "greenInfrastructure"
+    },
+    {
+      name: "Natural Resources Management",
+      title: "Natural Resources Management Careers",
+      description: "Natural resource specialists work directly with the conservation, management, restoration and treatment of water and other natural resources including wildlife.",
+      roles: [
+        "Conservation Technician",
+        "Wildlife Technician",
+        "Water Quality Technician"
+      ],
+      imageKey: "naturalResources"
     },
     {
       name: "Remediation",

@@ -240,6 +240,7 @@
     min-height: auto;
     padding: 0 16px;
     margin-bottom: 0;
+    overflow: visible;
   }
 
   .hero__image-container {
