@@ -62,6 +62,7 @@ const FieldImage = ({ fieldKey, alt }) => {
 
 function ExploreFields() {
   const [activeTab, setActiveTab] = useState("Agriculture");
+  const [activeIndex, setActiveIndex] = useState(0);
 
   const fields = [
     {
@@ -167,6 +168,24 @@ function ExploreFields() {
 
   const activeField = fields.find(field => field.name === activeTab) || fields[0];
 
+  // Navigation handlers for mobile carousel
+  const goToPrevField = () => {
+    const newIndex = activeIndex > 0 ? activeIndex - 1 : fields.length - 1;
+    setActiveIndex(newIndex);
+    setActiveTab(fields[newIndex].name);
+  };
+
+  const goToNextField = () => {
+    const newIndex = activeIndex < fields.length - 1 ? activeIndex + 1 : 0;
+    setActiveIndex(newIndex);
+    setActiveTab(fields[newIndex].name);
+  };
+
+  const handleTabClick = (fieldName, index) => {
+    setActiveTab(fieldName);
+    setActiveIndex(index);
+  };
+
   return (
     <section className="explore-fields">
       <div className="explore-fields__container">
@@ -175,21 +194,67 @@ function ExploreFields() {
           Learn more about careers in fields that give back to your community! Select the titles below to learn more about each field.
         </p>
 
-        {/* Tabs */}
+        {/* Tabs - Desktop */}
         <div className="explore-fields__tabs">
-          {fields.map(field => (
+          {fields.map((field, index) => (
             <button
               key={field.name}
               className={`explore-fields__tab ${activeTab === field.name ? 'explore-fields__tab--active' : ''}`}
-              onClick={() => setActiveTab(field.name)}
+              onClick={() => handleTabClick(field.name, index)}
             >
               {field.name}
             </button>
           ))}
         </div>
 
-        {/* Content */}
-        <div className="explore-fields__content">
+        {/* Mobile Navigation Wrapper - arrows on sides of content */}
+        <div className="explore-fields__mobile-wrapper">
+          <button
+            className="explore-fields__nav-btn explore-fields__nav-btn--left"
+            onClick={goToPrevField}
+            aria-label="Previous field"
+          >
+            ‹
+          </button>
+
+          <div className="explore-fields__content explore-fields__content--mobile">
+            <div className={`explore-fields__image-container ${!fieldImages[fieldImageKeys[activeField.imageKey]] ? 'explore-fields__image-container--placeholder' : ''}`}>
+              <FieldImage fieldKey={activeField.imageKey} alt={activeField.title} />
+            </div>
+
+            <div className="explore-fields__text-content">
+              <h3 className="explore-fields__field-title">{activeField.title}</h3>
+              <p className="explore-fields__field-description">{activeField.description}</p>
+
+              <div className="explore-fields__roles">
+                <p className="explore-fields__roles-label">Entry-level roles might include:</p>
+                <ul className="explore-fields__roles-list">
+                  {activeField.roles.map((role, index) => (
+                    <li key={index}>{role}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <button
+            className="explore-fields__nav-btn explore-fields__nav-btn--right"
+            onClick={goToNextField}
+            aria-label="Next field"
+          >
+            ›
+          </button>
+        </div>
+
+        {/* Mobile Indicator */}
+        <div className="explore-fields__mobile-indicator-wrapper">
+          <span className="explore-fields__mobile-indicator">
+            {activeIndex + 1} of {fields.length}
+          </span>
+        </div>
+
+        {/* Desktop Content */}
+        <div className="explore-fields__content explore-fields__content--desktop">
           <div className={`explore-fields__image-container ${!fieldImages[fieldImageKeys[activeField.imageKey]] ? 'explore-fields__image-container--placeholder' : ''}`}>
             <FieldImage fieldKey={activeField.imageKey} alt={activeField.title} />
           </div>

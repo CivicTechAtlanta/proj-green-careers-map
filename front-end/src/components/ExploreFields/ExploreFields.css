@@ -138,6 +138,19 @@
   line-height: 1.5;
 }
 
+/* Mobile Navigation - Hidden by default on desktop */
+.explore-fields__mobile-wrapper {
+  display: none;
+}
+
+.explore-fields__mobile-indicator-wrapper {
+  display: none;
+}
+
+.explore-fields__content--mobile {
+  display: none;
+}
+
 /* Mobile Responsive */
 @media (max-width: 768px) {
   .explore-fields {
@@ -156,13 +169,68 @@
     font-size: 15px;
   }
 
+  /* Hide tabs and desktop content on mobile, show carousel nav instead */
   .explore-fields__tabs {
-    gap: 8px;
+    display: none;
   }
 
-  .explore-fields__tab {
-    font-size: 13px;
-    padding: 8px 14px;
+  .explore-fields__content--desktop {
+    display: none;
+  }
+
+  .explore-fields__mobile-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+  }
+
+  .explore-fields__content--mobile {
+    display: block;
+    flex: 1;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background-color: white;
+  }
+
+  .explore-fields__nav-btn {
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  .explore-fields__nav-btn:hover {
+    background-color: #555;
+    transform: scale(1.05);
+  }
+
+  .explore-fields__nav-btn:active {
+    transform: scale(0.95);
+  }
+
+  .explore-fields__mobile-indicator-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 16px;
+  }
+
+  .explore-fields__mobile-indicator {
+    font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 14px;
+    color: #666;
   }
 
   .explore-fields__content {
@@ -213,14 +281,10 @@
     margin-bottom: 24px;
   }
 
-  .explore-fields__tabs {
-    gap: 6px;
-    margin-bottom: 24px;
-  }
-
-  .explore-fields__tab {
-    font-size: 12px;
-    padding: 6px 12px;
+  .explore-fields__nav-btn {
+    width: 40px;
+    min-width: 40px;
+    font-size: 24px;
   }
 
   .explore-fields__image-container {
