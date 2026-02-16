@@ -1,0 +1,55 @@
+# fly.toml app configuration file for Directus CMS backend
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'green-careers-map-demo'
+primary_region = 'iad'
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  # Directus configuration
+  # Database connection details should be set via `fly secrets set` command:
+  # fly secrets set DB_CLIENT=pg DB_HOST=<host> DB_PORT=5432 DB_DATABASE=<db> DB_USER=<user> DB_PASSWORD=<pass>
+  # fly secrets set SECRET=<random-secret> ADMIN_EMAIL=<email> ADMIN_PASSWORD=<password>
+  
+  WEBSOCKETS_ENABLED = "true"
+  CORS_ENABLED = "true"
+  PUBLIC_URL = "https://green-careers-map-demo.fly.dev"
+  
+  # These will be overridden by secrets - shown here as placeholders
+  # DB_CLIENT = "pg"
+  # DB_HOST = ""
+  # DB_PORT = "5432"
+  # DB_DATABASE = ""
+  # DB_USER = ""
+  # DB_PASSWORD = ""
+  # SECRET = ""
+  # ADMIN_EMAIL = ""
+  # ADMIN_PASSWORD = ""
+
+[http_service]
+  internal_port = 8055
+  force_https = true
+  auto_stop_machines = 'stop'
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ['app']
+
+  [http_service.concurrency]
+    type = "connections"
+    hard_limit = 25
+    soft_limit = 20
+
+[[vm]]
+  memory = '1gb'
+  cpu_kind = 'shared'
+  cpus = 1
+
+# Persistent volume for Directus uploads and extensions
+[mounts]
+  source = "directus_data"
+  destination = "/directus/uploads"
+  initial_size = "1gb"
