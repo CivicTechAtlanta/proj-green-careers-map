@@ -28,6 +28,18 @@
   width: auto;
 }
 
+.hero__org-name {
+  font-family: 'Arial Black', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 900;
+  font-size: 1.5rem;
+  color: #333;
+  line-height: 1.2;
+}
+
+.hero__org-name--short {
+  display: none;
+}
+
 /* Hamburger Menu Button (hidden on desktop) */
 .hero__hamburger {
   display: none;
@@ -212,6 +224,15 @@
 
   .hero__logo-img {
     height: 45px;
+  }
+
+  .hero__org-name--full {
+    display: none;
+  }
+
+  .hero__org-name--short {
+    display: inline;
+    font-size: 1.1rem;
   }
 
   .hero__hamburger {

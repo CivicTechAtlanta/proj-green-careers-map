@@ -1,30 +1,50 @@
 import { useState, useRef, useEffect } from "react";
 import "./JobMap.css";
 
-const levelMap = {
-  1: "Entry",
-  2: "Mid",
-  3: "Late Career",
-}
+import { levelMap, levelFallbackPrefix } from "../../../content/shared.js";
+import {
+  pageTitle,
+  pageDescription,
+  filterLabel,
+  experienceLevelLabel,
+  fieldsLabel,
+  skillsLabel,
+  sortByExperienceLabel,
+  filterByFieldLabel,
+  filterBySkillsLabel,
+  sortEntryToLate,
+  sortLateToEntry,
+  searchPlaceholder,
+  allLabel,
+  selectedLabel,
+  maxFieldsWarning,
+  maxFieldsWarningDesktop,
+  clearAllFiltersLabel,
+  tagsSelectedLabel,
+  hiddenColumnsLabel,
+  showColumnTooltip,
+  noResultsMessage,
+  noJobsAtLevel,
+} from "../../../content/job-map.js";
 
 function ConstructJobsTable(jobs) {
   let categories = []
   let tiers = []
-  
+
   if (Array.isArray(jobs)) {
     jobs.forEach((job) => {
       // Add unique categories
       if (job.category && !categories.includes(job.category)) {
         categories.push(job.category);
       }
-      
+
       // Add unique career levels to tiers
       if (job.career_level && !tiers.includes(job.career_level)) {
         tiers.push(job.career_level);
       }
     });
   }
-  
+
   return { categories, tiers };
 }
 
@@ -386,8 +406,8 @@ function JobMap({ onJobInfoClick, jobs }) {
   return (
     <div className="map">
       <div className="new-header-section">
-        <h1>Discover Where You Can Go</h1>
-        <p>Use the map below to see the available careers in each field or use the filters to find one tailored to your skills.</p>
+        <h1>{pageTitle}</h1>
+        <p>{pageDescription}</p>
       </div>
 
       {/* Mobile Filter Panel - Only visible on mobile */}
@@ -396,7 +416,7 @@ function JobMap({ onJobInfoClick, jobs }) {
           className={`mobile-filter-trigger ${isMobileFilterOpen ? 'mobile-filter-trigger--open' : ''}`}
           onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}
         >
-          <span>Filter</span>
+          <span>{filterLabel}</span>
           <svg className="mobile-filter-arrow" viewBox="0 0 12 12">
             <path fill="currentColor" d="M6 9L1 4h10z"/>
           </svg>
@@ -410,7 +430,7 @@ function JobMap({ onJobInfoClick, jobs }) {
                 className={`mobile-filter-section-header ${expandedMobileSections.experience ? 'mobile-filter-section-header--expanded' : ''}`}
                 onClick={() => setExpandedMobileSections(prev => ({ ...prev, experience: !prev.experience }))}
               >
-                <span>Experience Level</span>
+                <span>{experienceLevelLabel}</span>
                 <svg className="mobile-section-arrow" viewBox="0 0 12 12">
                   <path fill="currentColor" d="M6 9L1 4h10z"/>
                 </svg>
@@ -424,7 +444,7 @@ function JobMap({ onJobInfoClick, jobs }) {
                       checked={sortOrder === 'entry-to-late'}
                       onChange={() => setSortOrder('entry-to-late')}
                     />
-                    <span>Entry to Late-Career</span>
+                    <span>{sortEntryToLate}</span>
                   </label>
                   <label className="mobile-filter-option">
                     <input
@@ -433,7 +453,7 @@ function JobMap({ onJobInfoClick, jobs }) {
                       checked={sortOrder === 'late-to-entry'}
                       onChange={() => setSortOrder('late-to-entry')}
                     />
-                    <span>Late-Career to Entry</span>
+                    <span>{sortLateToEntry}</span>
                   </label>
                 </div>
               )}
@@ -445,7 +465,7 @@ function JobMap({ onJobInfoClick, jobs }) {
                 className={`mobile-filter-section-header ${expandedMobileSections.fields ? 'mobile-filter-section-header--expanded' : ''}`}
                 onClick={() => setExpandedMobileSections(prev => ({ ...prev, fields: !prev.fields }))}
               >
-                <span>Fields {selectedFields.length > 0 && <span className="mobile-filter-count">{selectedFields.length}</span>}</span>
+                <span>{fieldsLabel} {selectedFields.length > 0 && <span className="mobile-filter-count">{selectedFields.length}</span>}</span>
                 <svg className="mobile-section-arrow" viewBox="0 0 12 12">
                   <path fill="currentColor" d="M6 9L1 4h10z"/>
                 </svg>
@@ -454,7 +474,7 @@ function JobMap({ onJobInfoClick, jobs }) {
                 <div className="mobile-filter-options">
                   {selectedFields.length >= 5 && (
                     <div className="mobile-filter-warning">
-                      Maximum 5 fields. Uncheck one to select another.
+                      {maxFieldsWarning}
                     </div>
                   )}
                   {allCategories.map(cat => {
@@ -485,7 +505,7 @@ function JobMap({ onJobInfoClick, jobs }) {
                 className={`mobile-filter-section-header ${expandedMobileSections.skills ? 'mobile-filter-section-header--expanded' : ''}`}
                 onClick={() => setExpandedMobileSections(prev => ({ ...prev, skills: !prev.skills }))}
               >
-                <span>Skills {selectedSkills.length > 0 && <span className="mobile-filter-count">{selectedSkills.length}</span>}</span>
+                <span>{skillsLabel} {selectedSkills.length > 0 && <span className="mobile-filter-count">{selectedSkills.length}</span>}</span>
                 <svg className="mobile-section-arrow" viewBox="0 0 12 12">
                   <path fill="currentColor" d="M6 9L1 4h10z"/>
                 </svg>
@@ -515,7 +535,7 @@ function JobMap({ onJobInfoClick, jobs }) {
                 </svg>
                 <input
                   type="text"
-                  placeholder="Search jobs..."
+                  placeholder={searchPlaceholder}
                   className="search-box"
                   value={searchTerm}
                   onChange={handleSearchChange}
@@ -525,7 +545,7 @@ function JobMap({ onJobInfoClick, jobs }) {
 
             {/* Clear all button */}
             <button className="mobile-filter-clear" onClick={clearAllFilters}>
-              Clear All Filters
+              {clearAllFiltersLabel}
             </button>
           </div>
         )}
@@ -534,21 +554,21 @@ function JobMap({ onJobInfoClick, jobs }) {
       {/* Desktop Filters Row - Hidden on mobile */}
       <div className="filters-row filters-row--desktop">
         <div className="filter-group">
-          <label>Sort by Experience Level</label>
+          <label>{sortByExperienceLabel}</label>
           <select value={sortOrder} onChange={(e) => setSortOrder(e.target.value)}>
-            <option value="entry-to-late">Entry to Late-Career</option>
-            <option value="late-to-entry">Late-Career to Entry</option>
+            <option value="entry-to-late">{sortEntryToLate}</option>
+            <option value="late-to-entry">{sortLateToEntry}</option>
           </select>
         </div>
 
         <div className="filter-group multiselect-filter">
-          <label>Filter by Field</label>
+          <label>{filterByFieldLabel}</label>
           <div className="multiselect-wrapper" ref={fieldWrapperRef}>
             <button
               className="multiselect-trigger"
               onClick={() => setIsFieldDropdownOpen(!isFieldDropdownOpen)}
             >
-              {selectedFields.length === 0 ? 'All' : `${selectedFields.length} selected`}
+              {selectedFields.length === 0 ? allLabel : `${selectedFields.length} ${selectedLabel}`}
               <svg className="dropdown-arrow" viewBox="0 0 12 12">
                 <path fill="currentColor" d="M6 9L1 4h10z"/>
               </svg>
@@ -557,7 +577,7 @@ function JobMap({ onJobInfoClick, jobs }) {
               <div className={`multiselect-dropdown ${fieldDropdownAlignRight ? 'multiselect-dropdown--right' : ''}`}>
                 {selectedFields.length >= 5 && (
                   <div className="multiselect-max-warning">
-                    Maximum 5 fields can be displayed. Uncheck a field to select another.
+                    {maxFieldsWarningDesktop}
                   </div>
                 )}
                 {allCategories.map(cat => {
@@ -584,13 +604,13 @@ function JobMap({ onJobInfoClick, jobs }) {
         </div>
 
         <div className="filter-group multiselect-filter">
-          <label>Filter by Skills</label>
+          <label>{filterBySkillsLabel}</label>
           <div className="multiselect-wrapper" ref={skillsWrapperRef}>
             <button
               className="multiselect-trigger"
               onClick={() => setIsSkillsDropdownOpen(!isSkillsDropdownOpen)}
             >
-              {selectedSkills.length === 0 ? 'All' : `${selectedSkills.length} selected`}
+              {selectedSkills.length === 0 ? allLabel : `${selectedSkills.length} ${selectedLabel}`}
               <svg className="dropdown-arrow" viewBox="0 0 12 12">
                 <path fill="currentColor" d="M6 9L1 4h10z"/>
               </svg>
@@ -620,7 +640,7 @@ function JobMap({ onJobInfoClick, jobs }) {
             </svg>
             <input
               type="text"
-              placeholder="Search jobs..."
+              placeholder={searchPlaceholder}
               className="search-box"
               value={searchTerm}
               onChange={handleSearchChange}
@@ -629,13 +649,13 @@ function JobMap({ onJobInfoClick, jobs }) {
         </div>
 
         <button className="clear-all-link" onClick={clearAllFilters}>
-          Clear All Filters
+          {clearAllFiltersLabel}
         </button>
       </div>
 
       {(selectedFields.length > 0 || selectedSkills.length > 0) && (
         <div className="tags-selected-section">
-          <span className="tags-label">Tags Selected</span>
+          <span className="tags-label">{tagsSelectedLabel}</span>
           <div className="selected-tags-list">
             {selectedFields.map(field => (
               <div key={field} className="tag-pill">
@@ -654,13 +674,13 @@ function JobMap({ onJobInfoClick, jobs }) {
       )}
       {hiddenColumns.length > 0 && (
         <div className="hidden-columns-section">
-          <span className="hidden-columns-label">Hidden columns:</span>
+          <span className="hidden-columns-label">{hiddenColumnsLabel}</span>
           {hiddenColumns.map((category, index) => (
             <button
               key={index}
               className="hidden-column-btn"
               onClick={() => toggleColumnVisibility(category)}
-              title="Click to show column"
+              title={showColumnTooltip}
             >
               {category} ✓
             </button>
@@ -669,7 +689,7 @@ function JobMap({ onJobInfoClick, jobs }) {
       )}
       {filteredJobs.length === 0 || visibleCategories.length === 0 ? (
         <div className="no-results">
-          <p>No jobs match the selected criteria</p>
+          <p>{noResultsMessage}</p>
         </div>
       ) : (
         <>
@@ -712,7 +732,7 @@ function JobMap({ onJobInfoClick, jobs }) {
             const cellHeight = maxJobsPerTier[tier] ? maxJobsPerTier[tier] * 52 + 16 : 60;
             return (
               <tr key={rowIndex}>
-                <td className="tier-header">{levelMap[tier] || `Level ${tier}`}</td>
+                <td className="tier-header">{levelMap[tier] || `${levelFallbackPrefix} ${tier}`}</td>
                 {desktopVisibleCategories.map((category, colIndex) => {
                   const cellJobs = getJobsForCell(category, tier);
                   const columnIndex = categories.indexOf(category) + 1;
@@ -800,7 +820,7 @@ function JobMap({ onJobInfoClick, jobs }) {
                 return (
                   <div key={tier} className="mobile-tier-section">
                     <div className="mobile-tier-header">
-                      {levelMap[tier] || `Level ${tier}`}
+                      {levelMap[tier] || `${levelFallbackPrefix} ${tier}`}
                     </div>
                     <div className="mobile-jobs-list">
                       {cellJobs.length > 0 ? (
@@ -817,7 +837,7 @@ function JobMap({ onJobInfoClick, jobs }) {
                           </button>
                         ))
                       ) : (
-                        <div className="mobile-empty-tier">No jobs at this level</div>
+                        <div className="mobile-empty-tier">{noJobsAtLevel}</div>
                       )}
                     </div>
                   </div>

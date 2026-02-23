@@ -3,6 +3,14 @@ import Hero from "../Hero/Hero";
 import ExploreFields from "../ExploreFields/ExploreFields";
 import JobMap from "../JobMap/JobMap";
 import "./Home.css";
+import {
+  loadingText,
+  errorTitle,
+  retryButtonText,
+  acknowledgmentText,
+  acknowledgmentLinkText,
+  acknowledgmentLinkUrl,
+} from "../../../content/home.js";
 
 function Home({ onJobInfoClick }) {
   const [loading, setLoading] = useState(true);
@@ -54,14 +62,14 @@ function Home({ onJobInfoClick }) {
       <Hero />
       <ExploreFields />
       {loading ? (
-        <div className="loading">Loading...</div>
+        <div className="loading">{loadingText}</div>
       ) : error ? (
         <div className="error-container">
-          <div className="error-icon">⚠️</div>
-          <h2 className="error-title">Oops! Something went wrong</h2>
+          <div className="error-icon">{"\u26A0\uFE0F"}</div>
+          <h2 className="error-title">{errorTitle}</h2>
           <p className="error-message">{error}</p>
           <button className="error-retry" onClick={() => window.location.reload()}>
-            Try Again
+            {retryButtonText}
           </button>
         </div>
       ) : (
@@ -71,14 +79,14 @@ function Home({ onJobInfoClick }) {
       {/* Acknowledgment Box */}
       <div className="home__acknowledgment">
         <p className="home__acknowledgment-text">
-          A huge THANK YOU to the City of Atlanta Mayor's Office for their support of this initiative, including youth career workshop facilitation and data sharing from the Atlanta Clean Energy Career Map. For additional information on clean energy careers, you can access the Career Map here:{" "}
+          {acknowledgmentText}{" "}
           <a
-            href="https://atlbuildings.careerpathplatform.com/map/"
+            href={acknowledgmentLinkUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="home__acknowledgment-link"
           >
-            atlbuildings.careerpathplatform.com/map
+            {acknowledgmentLinkText}
           </a>
         </p>
       </div>
