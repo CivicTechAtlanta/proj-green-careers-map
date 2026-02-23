@@ -6,11 +6,21 @@ import dollarIcon from "../../../assets/dollar-sign.svg";
 import trendingUpIcon from "../../../assets/trending-up.svg";
 import graduationCapIcon from "../../../assets/graduation-cap.svg";
 
-const levelMap = {
-  1: "Entry",
-  2: "Mid",
-  3: "Late Career",
-};
+import { levelMap } from "../../../../content/shared.js";
+import {
+  jobDescriptionHeading,
+  compensationHeading,
+  experienceLevelHeading,
+  educationHeading,
+  experienceRequirementsHeading,
+  keySkillsHeading,
+  externalSearchesHeading,
+  linkedInJobsLabel,
+  indeedJobsLabel,
+  compensationIconAlt,
+  experienceLevelIconAlt,
+  educationIconAlt,
+} from "../../../../content/job-info-modal.js";
 
 function JobInfoModal({ activeModal, closeModal, jobData }) {
   const jobInfoRef = useRef(null);
@@ -46,7 +56,7 @@ function JobInfoModal({ activeModal, closeModal, jobData }) {
     if (element) {
       handleScroll(); // Initial check
       element.addEventListener('scroll', handleScroll);
-      
+
       // Check on resize
       const resizeObserver = new ResizeObserver(handleScroll);
       resizeObserver.observe(element);
@@ -76,13 +86,13 @@ function JobInfoModal({ activeModal, closeModal, jobData }) {
         </button>
         <div className="job-info" ref={jobInfoRef}>
           <header className="job-info__header">
-            <svg 
-              className="job-info__icon" 
-              viewBox="0 0 24 24" 
-              fill="none" 
-              stroke={jobData.categoryColor || 'rgb(255, 195, 66)'} 
-              strokeWidth="2" 
-              strokeLinecap="round" 
+            <svg
+              className="job-info__icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke={jobData.categoryColor || 'rgb(255, 195, 66)'}
+              strokeWidth="2"
+              strokeLinecap="round"
               strokeLinejoin="round"
             >
               <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
@@ -90,11 +100,11 @@ function JobInfoModal({ activeModal, closeModal, jobData }) {
             </svg>
             <div className="job-info__title-content">
               <h2 className="job-info__title">{jobData.job_name}</h2>
-              <p 
+              <p
                 className="job-info__category"
-                style={{ 
-                  borderColor: jobData.categoryColor || 'rgb(255, 195, 66)', 
-                  color: jobData.categoryColor || 'rgb(255, 195, 66)' 
+                style={{
+                  borderColor: jobData.categoryColor || 'rgb(255, 195, 66)',
+                  color: jobData.categoryColor || 'rgb(255, 195, 66)'
                 }}
               >
                 {jobData.category}
@@ -102,7 +112,7 @@ function JobInfoModal({ activeModal, closeModal, jobData }) {
             </div>
           </header>
           <div className="job-info__section">
-            <h3>Job Description</h3>
+            <h3>{jobDescriptionHeading}</h3>
             <p>{jobData.description}</p>
           </div>
           <div className="job-info__stats-wrapper">
@@ -110,10 +120,10 @@ function JobInfoModal({ activeModal, closeModal, jobData }) {
               <img
                 className="job-info__icon"
                 src={dollarIcon}
-                alt="compensation icon"
+                alt={compensationIconAlt}
               />
               <div className="job-info__stat-content">
-                <h3>Compensation</h3>
+                <h3>{compensationHeading}</h3>
                 <p>{jobData.payinfo}</p>
               </div>
             </div>
@@ -121,57 +131,57 @@ function JobInfoModal({ activeModal, closeModal, jobData }) {
               <img
                 className="job-info__icon"
                 src={trendingUpIcon}
-                alt="experience level icon"
+                alt={experienceLevelIconAlt}
               />
               <div className="job-info__stat-content">
-                <h3>Experience Level</h3>
+                <h3>{experienceLevelHeading}</h3>
                 <p>{levelMap[jobData.career_level] || jobData.career_level}</p>
               </div>
             </div>
             <div className="job-info__stat-item">
-              <img className="job-info__icon" src={graduationCapIcon} alt="education icon" />
+              <img className="job-info__icon" src={graduationCapIcon} alt={educationIconAlt} />
               <div className="job-info__stat-content">
-                <h3>Education Requirements</h3>
+                <h3>{educationHeading}</h3>
                 <p>{jobData.required_education}</p>
               </div>
             </div>
           </div>
           <div className="job-info__section">
             <div className="job-info__education-container">
-              <h3>Experience Requirements</h3>
+              <h3>{experienceRequirementsHeading}</h3>
             </div>
             <p>{jobData.experience}</p>
           </div>
           <div className="job-info__section">
             <div className="job-info__education-container">
-              <h3>Key Skills</h3>
+              <h3>{keySkillsHeading}</h3>
             </div>
             <p>{jobData.required_skills}</p>
           </div>
           {(jobData.linkedin_search || jobData.indeed_search) && (
             <div className="job-info__section">
-              <h3>External Searches</h3>
+              <h3>{externalSearchesHeading}</h3>
               <div className="external-search-buttons">
                 {jobData.linkedin_search && (
-                  <a 
-                    href={jobData.linkedin_search} 
-                    target="_blank" 
+                  <a
+                    href={jobData.linkedin_search}
+                    target="_blank"
                     rel="noopener noreferrer"
                     className="external-search-btn external-search-btn--linkedin"
                   >
                     <span className="btn-icon">in</span>
-                    LinkedIn Jobs
+                    {linkedInJobsLabel}
                   </a>
                 )}
                 {jobData.indeed_search && (
-                  <a 
-                    href={jobData.indeed_search} 
-                    target="_blank" 
+                  <a
+                    href={jobData.indeed_search}
+                    target="_blank"
                     rel="noopener noreferrer"
                     className="external-search-btn external-search-btn--indeed"
                   >
                     <span className="btn-icon">i</span>
-                    Indeed Jobs
+                    {indeedJobsLabel}
                   </a>
                 )}
               </div>

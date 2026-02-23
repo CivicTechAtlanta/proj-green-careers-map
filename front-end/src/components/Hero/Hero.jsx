@@ -1,6 +1,18 @@
 import { useState } from "react";
 import "./Hero.css";
 import prcLogo from "../../assets/images-optimized-v2/logo/prclogo.svg";
+import {
+  navCareersMap,
+  navContactUs,
+  logoAlt,
+  orgName,
+  orgNameShort,
+  heroImageAlt,
+  heroTitle,
+  heroDescription,
+  sectionTitle,
+  sectionDescription,
+} from "../../../content/hero.js";
 
 // Import optimized hero images (WebP + JPEG fallback at multiple sizes)
 const heroImageModules = import.meta.glob(
@@ -49,7 +61,9 @@ function Hero() {
         {/* Header Navigation */}
         <div className="hero__nav">
           <div className="hero__logo">
-            <img src={prcLogo} alt="Peoplestown Revitalization Corporation" className="hero__logo-img" />
+            <img src={prcLogo} alt={logoAlt} className="hero__logo-img" />
+            <span className="hero__org-name hero__org-name--full">{orgName}</span>
+            <span className="hero__org-name hero__org-name--short">{orgNameShort}</span>
           </div>
 
           <button
@@ -65,10 +79,10 @@ function Hero() {
 
           <nav className={`hero__nav-buttons ${menuOpen ? 'hero__nav-buttons--open' : ''}`}>
             <button className="hero__nav-btn hero__nav-btn--active" onClick={scrollToCareersMap}>
-              Careers Map
+              {navCareersMap}
             </button>
             <button className="hero__nav-btn hero__nav-btn--outline" onClick={scrollToContact}>
-              Contact Us
+              {navContactUs}
             </button>
           </nav>
         </div>
@@ -87,7 +101,7 @@ function Hero() {
                   src={heroSources.jpg['1440']}
                   srcSet={`${heroSources.jpg['768']} 768w, ${heroSources.jpg['1440']} 1440w`}
                   sizes="(max-width: 768px) 100vw, 1440px"
-                  alt="Green careers workers"
+                  alt={heroImageAlt}
                   className="hero__image"
                   loading="eager"
                   fetchPriority="high"
@@ -96,10 +110,9 @@ function Hero() {
             )}
             <div className="hero__image-overlay">
               <div className="hero__text-box">
-                <h1 className="hero__title">Future-Proof Careers</h1>
+                <h1 className="hero__title">{heroTitle}</h1>
                 <p className="hero__description">
-                  Make an impact. Build your future. Explore careers that help people, make communities
-                  more resilient to the effects of climate change, and open doors to fast-growing jobs.
+                  {heroDescription}
                 </p>
               </div>
             </div>
@@ -108,11 +121,9 @@ function Hero() {
 
         {/* Bottom Section */}
         <div className="hero__bottom-section">
-          <h2 className="hero__section-title">Careers You Can Grow With—Right Here at Home</h2>
+          <h2 className="hero__section-title">{sectionTitle}</h2>
           <p className="hero__section-description">
-            Peoplestown Revitalization Corporation connects Atlanta residents to entry-level career paths that strengthen our community
-            and create lasting opportunity. This page highlights jobs that build healthier neighborhoods, support essential services, and
-            offer skills you can grow with—so you can find work that gives back today and sets you up for a more resilient future tomorrow.
+            {sectionDescription}
           </p>
         </div>
       </div>
